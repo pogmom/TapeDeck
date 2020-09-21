@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="width" secondItem="Nou-CB-qnJ" secondAttribute="height" multiplier="1:1" id="3mw-Za-8Hw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <color key="tintColor" red="0.86256664989999998" green="0.69524472950000005" blue="0.2422021627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.84344667200000001" green="0.68542540070000002" blue="0.33161017300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" backgroundImage="play.circle" catalog="system"/>
                                 <connections>
                                     <action selector="play:" destination="9pv-A4-QxB" eventType="touchUpInside" id="3Tt-QE-VYp"/>
@@ -258,14 +258,14 @@
                                     <constraint firstAttribute="height" constant="50" id="Ovh-Gj-aeg"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="labelColor"/>
-                                <state key="normal" title="Developer Website"/>
+                                <state key="normal" title="Privacy Policy"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="websiteButton:" destination="8LK-WS-C3a" eventType="touchUpInside" id="hj9-mu-r8z"/>
+                                    <action selector="privacyButton:" destination="8LK-WS-C3a" eventType="touchUpInside" id="uzh-sH-2nz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gD8-gD-kvG">
@@ -275,7 +275,7 @@
                                     <constraint firstAttribute="height" constant="50" id="86M-fp-v4h"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="labelColor"/>
-                                <state key="normal" title="Support"/>
+                                <state key="normal" title="Email for Support"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="16"/>
@@ -336,24 +336,52 @@
                                     <action selector="largeTipButton:" destination="8LK-WS-C3a" eventType="touchUpInside" id="dQn-0b-voB"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BV-wp-YO2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BV-wp-YO2">
                                 <rect key="frame" x="20" y="423" width="280" height="43"/>
                                 <string key="text">Everything in AC Tape Deck is entirely free. Tips are welcome but not expected, and are not required to use any features of the app.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon by Isabella Gomez" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slx-7G-t3k">
+                                <rect key="frame" x="20" y="525.5" width="280" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bo4-PM-Ch5">
+                                <rect key="frame" x="16" y="75" width="288" height="50"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Jf2-Hf-rC2"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal" title="Developer Website"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="websiteButton:" destination="8LK-WS-C3a" eventType="touchUpInside" id="y2E-1G-XVT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qng-vH-mPk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Qng-vH-mPk" firstAttribute="trailing" secondItem="slx-7G-t3k" secondAttribute="trailing" constant="20" id="0Lz-gI-bvP"/>
                             <constraint firstItem="gD8-gD-kvG" firstAttribute="top" secondItem="SvO-8B-YAs" secondAttribute="bottom" constant="8" symbolic="YES" id="6Kl-jm-0xO"/>
+                            <constraint firstItem="Qng-vH-mPk" firstAttribute="bottom" secondItem="slx-7G-t3k" secondAttribute="bottom" constant="8" id="6p5-Fv-Rm0"/>
                             <constraint firstItem="Qng-vH-mPk" firstAttribute="trailing" secondItem="SvO-8B-YAs" secondAttribute="trailing" constant="16" id="FNp-wP-MqG"/>
+                            <constraint firstItem="slx-7G-t3k" firstAttribute="leading" secondItem="Qng-vH-mPk" secondAttribute="leading" constant="20" id="Hf3-fu-YFw"/>
+                            <constraint firstItem="Bo4-PM-Ch5" firstAttribute="leading" secondItem="Qng-vH-mPk" secondAttribute="leading" constant="16" id="J81-9H-TDg"/>
                             <constraint firstItem="8BV-wp-YO2" firstAttribute="top" secondItem="GLx-A2-QUQ" secondAttribute="bottom" constant="8" symbolic="YES" id="JIW-Fd-Rao"/>
                             <constraint firstItem="Qng-vH-mPk" firstAttribute="trailing" secondItem="7aC-B4-rXp" secondAttribute="trailing" constant="16" id="MWS-Gk-aGc"/>
                             <constraint firstItem="Qng-vH-mPk" firstAttribute="trailing" secondItem="gD8-gD-kvG" secondAttribute="trailing" constant="16" id="MZO-QU-Llr"/>
                             <constraint firstItem="11I-Jn-Iz5" firstAttribute="leading" secondItem="Qng-vH-mPk" secondAttribute="leading" constant="16" id="T9p-4Y-zLx"/>
                             <constraint firstItem="8BV-wp-YO2" firstAttribute="leading" secondItem="Qng-vH-mPk" secondAttribute="leading" constant="20" id="VP9-am-I43"/>
+                            <constraint firstItem="Qng-vH-mPk" firstAttribute="trailing" secondItem="Bo4-PM-Ch5" secondAttribute="trailing" constant="16" id="Ypj-jc-Fv4"/>
                             <constraint firstItem="SvO-8B-YAs" firstAttribute="leading" secondItem="Qng-vH-mPk" secondAttribute="leading" constant="16" id="bn2-fl-3tf"/>
                             <constraint firstItem="7aC-B4-rXp" firstAttribute="top" secondItem="11I-Jn-Iz5" secondAttribute="bottom" constant="8" symbolic="YES" id="boZ-R0-Egc"/>
                             <constraint firstItem="Qng-vH-mPk" firstAttribute="trailing" secondItem="11I-Jn-Iz5" secondAttribute="trailing" constant="16" id="ca1-LO-hvh"/>
@@ -365,6 +393,7 @@
                             <constraint firstItem="Qng-vH-mPk" firstAttribute="trailing" secondItem="8BV-wp-YO2" secondAttribute="trailing" constant="20" id="tXG-To-QNv"/>
                             <constraint firstItem="GLx-A2-QUQ" firstAttribute="leading" secondItem="Qng-vH-mPk" secondAttribute="leading" constant="16" id="tZw-B5-E6V"/>
                             <constraint firstItem="gD8-gD-kvG" firstAttribute="leading" secondItem="Qng-vH-mPk" secondAttribute="leading" constant="16" id="vcE-OD-6IL"/>
+                            <constraint firstItem="SvO-8B-YAs" firstAttribute="top" secondItem="Bo4-PM-Ch5" secondAttribute="bottom" constant="8" symbolic="YES" id="vdT-oo-ejD"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="play.fill" catalog="system" id="eCI-mO-7Eb"/>

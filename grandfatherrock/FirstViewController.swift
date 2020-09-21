@@ -435,6 +435,15 @@ class FirstViewController: UIViewController{
 			songLabel.text = ""
 		}
 		
+		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
+			GlobalVars.musicStarted = true
+			controlButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
+			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0,animations: {self.PlayButtonSize.constant = 130;self.view.layoutIfNeeded()}, completion: nil)
+		} else {
+			GlobalVars.musicStarted = false
+			controlButton.setBackgroundImage(UIImage(systemName: "play.circle"), for: UIControl.State.normal)
+			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0, animations: {self.PlayButtonSize.constant = 90;self.view.layoutIfNeeded()}, completion: nil)
+		}
 	}
 	
 	override func viewDidLoad() {
@@ -443,19 +452,7 @@ class FirstViewController: UIViewController{
 		
 		musicPlayer.stop()
 		GlobalVars.musicStarted = false
-		IAPHandler.shared.fetchAvailableProducts()
 		
-		IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
-			guard let strongSelf = self else{ return }
-			if type == .purchased {
-				let alertView = UIAlertController(title: "", message: type.message(), preferredStyle: .alert)
-				let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
-					
-				})
-				alertView.addAction(action)
-				strongSelf.present(alertView, animated: true, completion: nil)
-			}
-		}
 		
 		if(!defaults.bool(forKey: "didRun")){
 			defaults.set("New Horizons", forKey: "selectedTitle")
@@ -704,15 +701,11 @@ class FirstViewController: UIViewController{
 		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
 			GlobalVars.musicStarted = true
 			controlButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
-			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0){
-				self.PlayButtonSize.constant = 130
-			}
+			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0,animations: {self.PlayButtonSize.constant = 130;self.view.layoutIfNeeded()}, completion: nil)
 		} else {
 			GlobalVars.musicStarted = false
 			controlButton.setBackgroundImage(UIImage(systemName: "play.circle"), for: UIControl.State.normal)
-			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0){
-				self.PlayButtonSize.constant = 90
-			}
+			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0, animations: {self.PlayButtonSize.constant = 90;self.view.layoutIfNeeded()}, completion: nil)
 		}
 		
 		var foundSong = false
@@ -784,6 +777,7 @@ class FirstViewController: UIViewController{
 			// Present Dialog message
 			self.present(errorAlert, animated: true, completion:nil)
 			//print("Song is missing for at one hour")
+			
 			controlButton.isEnabled = false
 		} else {
 			controlButton.isEnabled = true
@@ -1078,20 +1072,15 @@ class FirstViewController: UIViewController{
 			musicPlayer.play()
 			GlobalVars.musicStarted = true
 			controlButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
-			UIView.animate(withDuration: 0.4,delay:0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0){
-				self.PlayButtonSize.constant = 130
-				self.view.layoutIfNeeded()
-			}
+			UIView.animate(withDuration: 0.4,delay:0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0,animations: {self.PlayButtonSize.constant = 130;self.view.layoutIfNeeded()}, completion: nil)
 		}
 		else{
 			let musicPlayer = MPMusicPlayerController.applicationMusicPlayer
 			musicPlayer.pause()
 			GlobalVars.musicStarted = false
 			controlButton.setBackgroundImage(UIImage(systemName: "play.circle"), for: UIControl.State.normal)
-			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0){
-				self.PlayButtonSize.constant = 90
-				self.view.layoutIfNeeded()
-			}
+			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0,animations: {self.PlayButtonSize.constant = 90;self.view.layoutIfNeeded()}, completion: nil)
+				
 		}
 		var nowPlayingString:String = "Now Playing: "
 		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
@@ -1299,9 +1288,16 @@ enum IAPHandlerAlertType{
 	
 	func message() -> String{
 		switch self {
-		case .disabled: return "Purchases are disabled in your device!"
+		case .disabled: return "Purchases are disabled on your device!"
 		case .restored: return "You've successfully restored your purchase!"
-		case .purchased: return "You've successfully bought this purchase!"
+		case .purchased: return "Your support means so much to me, thank you for enjoying AC Tape Deck!"
+		}
+	}
+	func title() -> String{
+		switch self {
+		case .disabled: return ""
+		case .restored: return ""
+		case .purchased: return "Thank you!"
 		}
 	}
 }

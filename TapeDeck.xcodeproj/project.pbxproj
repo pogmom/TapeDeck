@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BD7A5E342510173A003E992C /* day.gif in Resources */ = {isa = PBXBuildFile; fileRef = BD7A5E332510173A003E992C /* day.gif */; };
+		BD7A5E39251034D7003E992C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD7A5E38251034D7003E992C /* StoreKit.framework */; };
 		BD7D35D72510042D00A61B6B /* night.gif in Resources */ = {isa = PBXBuildFile; fileRef = BD7D35D52510042D00A61B6B /* night.gif */; };
 		BD7D35DB2510111700A61B6B /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = BD7D35DA2510111700A61B6B /* SwiftyGif */; };
 		BDA060FA2447F3E6009C72CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA060F92447F3E6009C72CE /* AppDelegate.swift */; };
@@ -40,8 +41,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BD58E8CE2514577E008D1E8E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		BD58E8C325145778008D1E8E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		BD7A5E332510173A003E992C /* day.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = day.gif; sourceTree = "<group>"; };
+		BD7A5E38251034D7003E992C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BD7D35D52510042D00A61B6B /* night.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = night.gif; sourceTree = "<group>"; };
 		BDA060F62447F3E6009C72CE /* Nook Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nook Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA060F92447F3E6009C72CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +76,7 @@
 		BDA0611F2447F3F3009C72CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDA0618A244826DB009C72CE /* grandfatherrock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = grandfatherrock.entitlements; sourceTree = "<group>"; };
 		BDB53FCC250765A1004E9788 /* FinkHeavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FinkHeavy.ttf; sourceTree = "<group>"; };
+		BDE579F52514894600248E86 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		BDE8138E2507422100371570 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD7D35DB2510111700A61B6B /* SwiftyGif in Frameworks */,
+				BD7A5E39251034D7003E992C /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +107,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD7A5E37251034D7003E992C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BD7A5E38251034D7003E992C /* StoreKit.framework */,
+				BD58E8C325145778008D1E8E /* SwiftUI.framework */,
+				BDE579F52514894600248E86 /* WidgetKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BD7D35D42510042D00A61B6B /* gifs */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +133,7 @@
 				BDA061112447F3F3009C72CE /* grandfatherrockTests */,
 				BDA0611C2447F3F3009C72CE /* grandfatherrockUITests */,
 				BDA060F72447F3E6009C72CE /* Products */,
+				BD7A5E37251034D7003E992C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -173,6 +202,7 @@
 				BDA060F22447F3E6009C72CE /* Sources */,
 				BDA060F32447F3E6009C72CE /* Frameworks */,
 				BDA060F42447F3E6009C72CE /* Resources */,
+				BD58E8CE2514577E008D1E8E /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -228,7 +258,7 @@
 		BDA060EE2447F3E5009C72CE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Micah Gomez";
 				TargetAttributes = {
@@ -481,11 +511,12 @@
 		BDA061232447F3F3009C72CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -506,11 +537,12 @@
 		BDA061242447F3F3009C72CE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

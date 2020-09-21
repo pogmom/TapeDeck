@@ -28,7 +28,7 @@
 	<string>To select songs for each hour</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>FinkHeavyttf</string>
+		<string>FinkHeavy.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

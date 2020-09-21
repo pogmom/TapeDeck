@@ -17,6 +17,12 @@ class ThirdViewController: UIViewController {
 		}
 	}
 	
+	@IBAction func privacyButton(_ sender: Any) {
+	if let url = URL(string: "https://micahpgomez.dev/Privacy.html") {
+		UIApplication.shared.open(url)
+	}
+	}
+	
 	@IBAction func supportEmail(_ sender: Any) {
 		if let url = URL(string: "mailto:support@micahpgomez.dev") {
 			UIApplication.shared.open(url)
@@ -24,7 +30,7 @@ class ThirdViewController: UIViewController {
 	}
 	
 	@IBAction func smallTipButton(_ sender: Any) {
-		IAPHandler.shared.purchaseMyProduct(index: 0)
+		IAPHandler.shared.purchaseMyProduct(index: 2)
 	}
 	
 	@IBAction func mediumTipButton(_ sender: Any) {
@@ -32,7 +38,7 @@ class ThirdViewController: UIViewController {
 	}
 	
 	@IBAction func largeTipButton(_ sender: Any) {
-		IAPHandler.shared.purchaseMyProduct(index: 2)
+		IAPHandler.shared.purchaseMyProduct(index: 0)
 	}
 	
 	let defaults = UserDefaults.standard
@@ -41,7 +47,19 @@ class ThirdViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 		//print("view loaded!")
+		IAPHandler.shared.fetchAvailableProducts()
 		
+		IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
+			guard let strongSelf = self else{ return }
+			if type == .purchased {
+				let alertView = UIAlertController(title: type.title(), message: type.message(), preferredStyle: .alert)
+				let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
+					
+				})
+				alertView.addAction(action)
+				strongSelf.present(alertView, animated: true, completion: nil)
+			}
+		}
 	}
 	
 	
