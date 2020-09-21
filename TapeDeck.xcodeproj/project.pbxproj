@@ -21,6 +21,12 @@
 		BDA061132447F3F3009C72CE /* grandfatherrockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA061122447F3F3009C72CE /* grandfatherrockTests.swift */; };
 		BDA0611E2447F3F3009C72CE /* grandfatherrockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA0611D2447F3F3009C72CE /* grandfatherrockUITests.swift */; };
 		BDB53FCE250765A2004E9788 /* FinkHeavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDB53FCC250765A1004E9788 /* FinkHeavy.ttf */; };
+		BDE56CB925186B0500A47239 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE579F52514894600248E86 /* WidgetKit.framework */; platformFilter = ios; };
+		BDE56CBA25186B0500A47239 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD58E8C325145778008D1E8E /* SwiftUI.framework */; };
+		BDE56CBD25186B0500A47239 /* hsscene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE56CBC25186B0500A47239 /* hsscene.swift */; };
+		BDE56CBF25186B0C00A47239 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDE56CBE25186B0C00A47239 /* Assets.xcassets */; };
+		BDE56CC325186B0C00A47239 /* hssceneExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BDE56CB825186B0500A47239 /* hssceneExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BDE56CCB25186C4100A47239 /* FinkHeavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDB53FCC250765A1004E9788 /* FinkHeavy.ttf */; };
 		BDE8138F2507422100371570 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8138E2507422100371570 /* ThirdViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +45,13 @@
 			remoteGlobalIDString = BDA060F52447F3E6009C72CE;
 			remoteInfo = grandfatherrock;
 		};
+		BDE56CC125186B0C00A47239 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDA060EE2447F3E5009C72CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDE56CB725186B0500A47239;
+			remoteInfo = hssceneExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +61,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				BDE56CC325186B0C00A47239 /* hssceneExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +73,7 @@
 		BD7A5E332510173A003E992C /* day.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = day.gif; sourceTree = "<group>"; };
 		BD7A5E38251034D7003E992C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BD7D35D52510042D00A61B6B /* night.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = night.gif; sourceTree = "<group>"; };
+		BD8D804625188B2200389258 /* hssceneExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = hssceneExtension.entitlements; sourceTree = "<group>"; };
 		BDA060F62447F3E6009C72CE /* Nook Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nook Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA060F92447F3E6009C72CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDA060FB2447F3E6009C72CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +91,10 @@
 		BDA0611F2447F3F3009C72CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDA0618A244826DB009C72CE /* grandfatherrock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = grandfatherrock.entitlements; sourceTree = "<group>"; };
 		BDB53FCC250765A1004E9788 /* FinkHeavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FinkHeavy.ttf; sourceTree = "<group>"; };
+		BDE56CB825186B0500A47239 /* hssceneExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = hssceneExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDE56CBC25186B0500A47239 /* hsscene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hsscene.swift; sourceTree = "<group>"; };
+		BDE56CBE25186B0C00A47239 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BDE56CC025186B0C00A47239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDE579F52514894600248E86 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		BDE8138E2507422100371570 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +123,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BDE56CB525186B0500A47239 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE56CBA25186B0500A47239 /* SwiftUI.framework in Frameworks */,
+				BDE56CB925186B0500A47239 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -129,9 +157,11 @@
 		BDA060ED2447F3E5009C72CE = {
 			isa = PBXGroup;
 			children = (
+				BD8D804625188B2200389258 /* hssceneExtension.entitlements */,
 				BDA060F82447F3E6009C72CE /* grandfatherrock */,
 				BDA061112447F3F3009C72CE /* grandfatherrockTests */,
 				BDA0611C2447F3F3009C72CE /* grandfatherrockUITests */,
+				BDE56CBB25186B0500A47239 /* hsscene */,
 				BDA060F72447F3E6009C72CE /* Products */,
 				BD7A5E37251034D7003E992C /* Frameworks */,
 			);
@@ -143,6 +173,7 @@
 				BDA060F62447F3E6009C72CE /* Nook Music.app */,
 				BDA0610E2447F3F3009C72CE /* grandfatherrockTests.xctest */,
 				BDA061192447F3F3009C72CE /* grandfatherrockUITests.xctest */,
+				BDE56CB825186B0500A47239 /* hssceneExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,6 +223,16 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		BDE56CBB25186B0500A47239 /* hsscene */ = {
+			isa = PBXGroup;
+			children = (
+				BDE56CBC25186B0500A47239 /* hsscene.swift */,
+				BDE56CBE25186B0C00A47239 /* Assets.xcassets */,
+				BDE56CC025186B0C00A47239 /* Info.plist */,
+			);
+			path = hsscene;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -207,6 +248,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BDE56CC225186B0C00A47239 /* PBXTargetDependency */,
 			);
 			name = grandfatherrock;
 			packageProductDependencies = (
@@ -252,6 +294,23 @@
 			productReference = BDA061192447F3F3009C72CE /* grandfatherrockUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		BDE56CB725186B0500A47239 /* hssceneExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDE56CC425186B0C00A47239 /* Build configuration list for PBXNativeTarget "hssceneExtension" */;
+			buildPhases = (
+				BDE56CB425186B0500A47239 /* Sources */,
+				BDE56CB525186B0500A47239 /* Frameworks */,
+				BDE56CB625186B0500A47239 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = hssceneExtension;
+			productName = hssceneExtension;
+			productReference = BDE56CB825186B0500A47239 /* hssceneExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -272,6 +331,9 @@
 					BDA061182447F3F3009C72CE = {
 						CreatedOnToolsVersion = 11.4.1;
 						TestTargetID = BDA060F52447F3E6009C72CE;
+					};
+					BDE56CB725186B0500A47239 = {
+						CreatedOnToolsVersion = 12.0;
 					};
 				};
 			};
@@ -294,6 +356,7 @@
 				BDA060F52447F3E6009C72CE /* grandfatherrock */,
 				BDA0610D2447F3F3009C72CE /* grandfatherrockTests */,
 				BDA061182447F3F3009C72CE /* grandfatherrockUITests */,
+				BDE56CB725186B0500A47239 /* hssceneExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -323,6 +386,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDE56CB625186B0500A47239 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE56CCB25186C4100A47239 /* FinkHeavy.ttf in Resources */,
+				BDE56CBF25186B0C00A47239 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +429,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BDE56CB425186B0500A47239 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE56CBD25186B0500A47239 /* hsscene.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -369,6 +449,11 @@
 			isa = PBXTargetDependency;
 			target = BDA060F52447F3E6009C72CE /* grandfatherrock */;
 			targetProxy = BDA0611A2447F3F3009C72CE /* PBXContainerItemProxy */;
+		};
+		BDE56CC225186B0C00A47239 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDE56CB725186B0500A47239 /* hssceneExtension */;
+			targetProxy = BDE56CC125186B0C00A47239 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -644,6 +729,58 @@
 			};
 			name = Release;
 		};
+		BDE56CC525186B0C00A47239 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PRBH2T6668;
+				INFOPLIST_FILE = hsscene/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BDE56CC625186B0C00A47239 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PRBH2T6668;
+				INFOPLIST_FILE = hsscene/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -679,6 +816,15 @@
 			buildConfigurations = (
 				BDA061292447F3F3009C72CE /* Debug */,
 				BDA0612A2447F3F3009C72CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDE56CC425186B0C00A47239 /* Build configuration list for PBXNativeTarget "hssceneExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDE56CC525186B0C00A47239 /* Debug */,
+				BDE56CC625186B0C00A47239 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

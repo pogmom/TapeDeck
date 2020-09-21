@@ -1,0 +1,26 @@
+{
+  "images" : [
+    {
+      "filename" : "ACBackgroundNightLarge.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "ACBackgroundNightLarge-1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "ACBackgroundNightLarge-2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "compression-type" : "gpu-optimized-smallest"
+  }
+}
