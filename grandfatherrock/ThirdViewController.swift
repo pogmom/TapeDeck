@@ -12,7 +12,7 @@ import MediaPlayer
 class ThirdViewController: UIViewController {
 	
 	@IBAction func websiteButton(_ sender: Any) {
-		if let url = URL(string: "https://micahpgomez.dev") {
+		if let url = URL(string: "https://micahpgomez.com") {
 			UIApplication.shared.open(url)
 		}
 	}
@@ -24,7 +24,7 @@ class ThirdViewController: UIViewController {
 	}
 	
 	@IBAction func supportEmail(_ sender: Any) {
-		if let url = URL(string: "mailto:support@micahpgomez.dev") {
+		if let url = URL(string: "mailto:support@micahpgomez.com") {
 			UIApplication.shared.open(url)
 		}
 	}

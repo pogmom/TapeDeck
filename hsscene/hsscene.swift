@@ -26,6 +26,7 @@ struct Provider: TimelineProvider {
 		let currentDate = Date()
 		for hourOffset in 0 ..< 5 {
 			let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset*5, to: currentDate)!
+			print(entryDate)
 			let entry = SimpleEntry(date: entryDate, hour: hourString(), c1: getC1(), c2: getC2(), sceneAsset: getSceneAsset())
 			entries.append(entry)
 		}

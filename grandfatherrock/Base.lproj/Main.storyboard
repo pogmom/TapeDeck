@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,6 +34,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nou-CB-qnJ">
                                 <rect key="frame" x="95" y="195" width="130" height="129"/>
+                                <accessibility key="accessibilityConfiguration" hint="Press to pause/play the music" label="Media Control Button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="1c8-JO-es0"/>
                                     <constraint firstAttribute="width" secondItem="Nou-CB-qnJ" secondAttribute="height" multiplier="1:1" id="3mw-Za-8Hw"/>
@@ -133,6 +134,7 @@
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TnY-SL-DcE">
                                                     <rect key="frame" x="16" y="12" width="256" height="31"/>
+                                                    <accessibility key="accessibilityConfiguration" hint="Press to select a track for this hour"/>
                                                     <fontDescription key="fontDescription" name="FinkHeavy" family="FinkHeavy" pointSize="32"/>
                                                     <color key="textColor" red="0.86256664989999998" green="0.69524472950000005" blue="0.2422021627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -178,6 +180,7 @@
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLK-eh-BHE">
                                 <rect key="frame" x="16" y="459" width="288" height="40"/>
+                                <accessibility key="accessibilityConfiguration" label="Developer Information"/>
                                 <fontDescription key="fontDescription" name="FinkHeavy" family="FinkHeavy" pointSize="24"/>
                                 <color key="tintColor" red="0.86256664989999998" green="0.69524472950000005" blue="0.2422021627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Developer Information">
@@ -221,7 +224,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="748.125" y="359.15492957746477"/>
+            <point key="canvasLocation" x="748" y="358"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -402,11 +405,38 @@
             </objects>
             <point key="canvasLocation" x="1507.5" y="358.0985915492958"/>
         </scene>
+        <!--Tune Writer-->
+        <scene sceneID="4HD-tT-eIY">
+            <objects>
+                <viewController title="Tune Writer" id="zOe-Zh-aR8" customClass="FourthViewController" customModule="Nook_Music" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hB0-dI-9mZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hMG-YO-jSe" userLabel="Gradient View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="VvP-4h-AlD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Select Music" image="music.quarternote.3" catalog="system" id="AdX-qc-4Zh"/>
+                    <connections>
+                        <outlet property="gradientView" destination="hMG-YO-jSe" id="W5k-Ys-Jdm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IJj-FB-yVG" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="0.0" y="763"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ACBackgroundDay" width="750" height="200"/>
         <image name="grass" width="530" height="93"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
+        <image name="music.quarternote.3" catalog="system" width="128" height="103"/>
         <image name="play.circle" catalog="system" width="128" height="121"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <systemColor name="labelColor">

@@ -78,47 +78,62 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		}
 
 		cell.hourLabel?.text = hourString
+		cell.accessibilityLabel = cell.hourLabel.text
+		cell.accessibilityLabel?.append(". ")
 		
 		switch GlobalVars.selectedMusicList {
 			case 0:
 				cell.songLabel?.text = GlobalVars.musicSelection0[indexPath.row]
 				if (GlobalVars.musicSelectionID0[indexPath.row] == 0){
 					cell.accessoryType = .detailButton
+					cell.accessibilityLabel?.append("No song set")
 				} else {
 					cell.accessoryType = .none
+					cell.accessibilityLabel?.append(cell.songLabel.text!)
 				}
 			case 1:
 				cell.songLabel?.text = GlobalVars.musicSelection1[indexPath.row]
 				if (GlobalVars.musicSelectionID1[indexPath.row] == 0){
 					cell.accessoryType = .detailButton
+					cell.accessibilityLabel?.append("No song set")
 				} else {
 					cell.accessoryType = .none
+					cell.accessibilityLabel?.append(cell.songLabel.text!)
 				}
 			case 2:
 				cell.songLabel?.text = GlobalVars.musicSelection2[indexPath.row]
 				if (GlobalVars.musicSelectionID2[indexPath.row] == 0){
 					cell.accessoryType = .detailButton
+					cell.accessibilityLabel?.append("No song set")
 				} else {
 					cell.accessoryType = .none
+					cell.accessibilityLabel?.append(cell.songLabel.text!)
 				}
 			case 3:
 				cell.songLabel?.text = GlobalVars.musicSelection3[indexPath.row]
 				if (GlobalVars.musicSelectionID3[indexPath.row] == 0){
 					cell.accessoryType = .detailButton
+					cell.accessibilityLabel?.append("No song set")
 				} else {
 					cell.accessoryType = .none
+					cell.accessibilityLabel?.append(cell.songLabel.text!)
 				}
 			case 4:
 				cell.songLabel?.text = GlobalVars.musicSelection4[indexPath.row]
 				if (GlobalVars.musicSelectionID4[indexPath.row] == 0){
 					cell.accessoryType = .detailButton
+					cell.accessibilityLabel?.append("No song set")
 				} else {
 					cell.accessoryType = .none
+					cell.accessibilityLabel?.append(cell.songLabel.text!)
 				}
 			default:
 				cell.songLabel?.text = "uh oh!"
 				cell.accessoryType = .detailButton
+				cell.accessibilityLabel?.append("No song set")
 		}
+		
+		cell.accessibilityHint?.append("Press to set a song for this hour")
 		
 		return cell
 	}
