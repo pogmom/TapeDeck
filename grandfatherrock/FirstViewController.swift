@@ -49,190 +49,134 @@ extension UserDefaults: ObjectSavable {
 	}
 }
 
+var audioPlayer = AVAudioPlayer()
+var musicPlayer = MPMusicPlayerController.applicationMusicPlayer
+
 public class musicHandler{
 	@objc class func updateMusic(){
 		
+		print("updating music")
+		print(GlobalVars.musicStarted)
+		
 		timer.invalidate()
+		//audioPlayer.stop()
+		//musicPlayer.stop()
+		
 		
 		//print("updating song")
 		
 		GlobalVars.hour = Calendar.current.component(.hour, from: Date())
 		
 		//song = GlobalVars.titleCode + hourPadding + String(GlobalVars.hour)
-		////print(song)
-		let musicPlayer = MPMusicPlayerController.applicationMusicPlayer
+		//print(song)
+		let documentsUrl:URL =  (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!) as URL
+		var mediaPredicate = MPMediaPredicate()
 		
 		do{
 			
-			var mediaPredicate = MPMediaPredicate()
-			switch GlobalVars.selectedMusicList {
-			case 0:
-				if(GlobalVars.musicSelectionID0[GlobalVars.hour] != 0){
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID0[GlobalVars.hour], forProperty: "persistentID")
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
-					}
-					//print("Song Found!")
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID0[searchHour], forProperty: "persistentID")
+			print(GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.hour])
+			print(GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.hour])
+			
+			if(GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.hour] != 0){
+				mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.hour], forProperty: "persistentID")
+				GlobalVars.currentMusicFormat = true
+				print("ID is not zero")
+			} else if(GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.hour] != ""){
+				do {
+					let destinationFileUrl = documentsUrl.appendingPathComponent(GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.hour])
+					audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath:destinationFileUrl.path))
+					GlobalVars.currentMusicFormat = false
+					print("URL is not blank")
+				} catch {
+					print(error.localizedDescription)
 				}
-			case 1:
-				if(GlobalVars.musicSelectionID1[GlobalVars.hour] != 0){
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID1[GlobalVars.hour], forProperty: "persistentID")
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID1[searchHour]
-						
-						//print(searchID)
+			} else {
+				print("ID is zero, URL is blank, scanning for previous songs")
+				var searchID:UInt64 = 0
+				var searchURL:String = ""
+				GlobalVars.searchHour = GlobalVars.hour
+				while (searchID == 0 && searchURL == "") {
+					if(GlobalVars.searchHour > 0){
+						GlobalVars.searchHour -= 1
+					} else {
+						GlobalVars.searchHour = 23
 					}
-					//print("Song Found!")
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID1[searchHour], forProperty: "persistentID")
-				}
-			case 2:
-				if(GlobalVars.musicSelectionID2[GlobalVars.hour] != 0){
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID2[GlobalVars.hour], forProperty: "persistentID")
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID2[searchHour]
-						
-						//print(searchID)
+					if(GlobalVars.searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
 					}
-					//print("Song Found!")
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID2[searchHour], forProperty: "persistentID")
-				}
-			case 3:
-				if(GlobalVars.musicSelectionID3[GlobalVars.hour] != 0){
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID3[GlobalVars.hour], forProperty: "persistentID")
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.searchHour]
+					searchURL = GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.searchHour]
+					
+					print("searchID \(searchID)")
+					print("searchURL \(searchURL)")
+					
+					if (searchID != 0){
+						mediaPredicate = MPMediaPropertyPredicate(value: searchID, forProperty: "persistentID")
+						GlobalVars.currentMusicFormat = true
+						print("ID is not zero")
+					} else if (searchURL != ""){
+						do {
+							let destinationFileUrl = documentsUrl.appendingPathComponent(searchURL)
+							audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath:destinationFileUrl.path))
+							GlobalVars.currentMusicFormat = false
+							print("URL is not blank")
+						} catch {
+							print(error.localizedDescription)
 						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID3[searchHour]
-						
-						//print(searchID)
 					}
-					//print("Song Found!")
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID3[searchHour], forProperty: "persistentID")
 				}
-			case 4:
-				if(GlobalVars.musicSelectionID4[GlobalVars.hour] != 0){
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID4[GlobalVars.hour], forProperty: "persistentID")
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID4[searchHour]
-						
-						//print(searchID)
-					}
-					//print("Song Found!")
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID4[searchHour], forProperty: "persistentID")
-				}
-			default:
-				if(GlobalVars.musicSelectionID0[GlobalVars.hour] != 0){
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID0[GlobalVars.hour], forProperty: "persistentID")
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
-					}
-					//print("Song Found!")
-					mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID0[searchHour], forProperty: "persistentID")
-				}
+				print("Format: \(GlobalVars.currentMusicFormat)")
 			}
 			
-			//let mediaPredicate = MPMediaPropertyPredicate(value: GlobalVars.musicSelectionID1[GlobalVars.hour], forProperty: "persistentID")
-			
-			let mediaQuery = MPMediaQuery()
-			
-			mediaQuery.addFilterPredicate(mediaPredicate)
-			
-			
-			//let mediaItemCollection: MPMediaItemCollection = MPMediaItemCollection()
-			
-			musicPlayer.setQueue(with: mediaQuery)
-			musicPlayer.repeatMode = .one
 			//print(mediaQuery)
 			//musicPlayer.play()
+			let mediaQuery = MPMediaQuery()
+							
+			mediaQuery.addFilterPredicate(mediaPredicate)
+							
+							
+			//let mediaItemCollection: MPMediaItemCollection = MPMediaItemCollection()
+							
+			musicPlayer.setQueue(with: mediaQuery)
+			musicPlayer.repeatMode = .one
 		}
 		
+		if(GlobalVars.currentMusicFormat) {
+			
+			if(GlobalVars.musicStarted){
+				
+				musicPlayer.play()
+			}
+		} else {
+			audioPlayer.prepareToPlay()
+			audioPlayer.numberOfLoops = -1
+			
+			let audioSession = AVAudioSession.sharedInstance()
+			do{
+				//try audioSession.setCategory(.playback, mode: .default)
+				try audioSession.setActive(true)
+				try audioSession.setCategory(.playback, mode: .default, options:
+																			.init(rawValue: 0))
+			} catch {
+				print(error.localizedDescription)
+			}
+			if(GlobalVars.musicStarted){
+				audioPlayer.play()
+				let mpic = MPNowPlayingInfoCenter.default()
+						mpic.nowPlayingInfo = [
+							MPMediaItemPropertyTitle:"This Is a Test",
+							MPMediaItemPropertyArtist:"Matt Neuburg"
+						]
+			}
+		}
 		
-		
-		if(MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing){
+		/*if(musicPlayer.playbackState == MPMusicPlaybackState.playing){
 			musicPlayer.play()
-		}
+		}*/
 		
+		print("making timer")
 		if(Calendar.current.component(.minute, from: Date()) == 0){
 			date = Date().addingTimeInterval(3600)
 		} else{
@@ -247,24 +191,24 @@ public class musicHandler{
 		timer = Timer(fireAt: date, interval: 0, target: self, selector: #selector(updateMusic), userInfo: nil, repeats: false)
 		RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
 		
+		print("done updating music")
 	}
 }
 
 struct GlobalVars {
-	static var musicSelectionID0:[UInt64] = [UInt64]()
-	static var musicSelection0:[String] = [String]()
-	static var musicSelectionID1:[UInt64] = [UInt64]()
-	static var musicSelection1:[String] = [String]()
-	static var musicSelectionID2:[UInt64] = [UInt64]()
-	static var musicSelection2:[String] = [String]()
-	static var musicSelectionID3:[UInt64] = [UInt64]()
-	static var musicSelection3:[String] = [String]()
-	static var musicSelectionID4:[UInt64] = [UInt64]()
-	static var musicSelection4:[String] = [String]()
-	static var selectedMusicList:Int = 0
+	static var musicSelectionID:[[UInt64]] = [[UInt64]](repeating: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], count: 5)
+	static var musicSelection:[[String]] = [[String]](repeating: ["","","","","","","","","","","","","","","","","","","","","","","",""], count: 5)
+	static var musicFileURL:[[String]] = [[String]](repeating: ["","","","","","","","","","","","","","","","","","","","","","","",""], count: 5)
+	static var musicFormatType:[[Bool]] = [[Bool]](repeating: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false], count: 5)
+	
+	static var selectedCell:Int? = nil
+	
+	static var selectedMusicList:Int = UserDefaults.standard.integer(forKey: "savedSelectedMusicList")
 	static var musicStarted = false
+	static var currentMusicFormat:Bool = false
 	static var titleName = UserDefaults.standard.string(forKey: "selectedTitle")
 	static var hour = Calendar.current.component(.hour, from: Date())
+	static var searchHour:Int = 0
 }
 
 var i = 0
@@ -280,7 +224,6 @@ var prevVol = 0.0
 class FirstViewController: UIViewController{
 	
 	let defaults = UserDefaults.standard
-	let musicPlayer = MPMusicPlayerController.applicationMusicPlayer
 	
 	//@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var timeLabel: UILabel!
@@ -292,153 +235,66 @@ class FirstViewController: UIViewController{
 		//dateLabel.text = DateFormatter.localizedString(from: Date(), dateStyle: .long, timeStyle: .none)
 		timeLabel.text = DateFormatter.localizedString(from: Date(), dateStyle: .none, timeStyle: .short)
 		var nowPlayingString:String = "Now Playing: "
-		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
-			switch GlobalVars.selectedMusicList {
-			case 0:
-				if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
+		if (musicPlayer.playbackState == MPMusicPlaybackState.playing) {
+			print("musicPlayer is playing")
+			if GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				GlobalVars.searchHour = GlobalVars.hour
+				while (searchID == 0) {
+					if(GlobalVars.searchHour > 0){
+						GlobalVars.searchHour -= 1
+					} else {
+						GlobalVars.searchHour = 23
 					}
-					nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
-				}
-			case 1:
-				if GlobalVars.musicSelectionID1[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection1[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID1[searchHour]
-						
-						//print(searchID)
+					if(GlobalVars.searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
 					}
-					nowPlayingString.append(GlobalVars.musicSelection1[searchHour])
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.searchHour]
+					
+					//print(searchID)
 				}
-			case 2:
-				if GlobalVars.musicSelectionID2[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection2[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID2[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection2[searchHour])
-				}
-			case 3:
-				if GlobalVars.musicSelectionID3[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection3[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID3[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection3[searchHour])
-				}
-			case 4:
-				if GlobalVars.musicSelectionID4[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection4[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID4[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection4[searchHour])
-				}
-			default:
-				if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
-				}
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.searchHour])
 			}
+			
 			songLabel.text = nowPlayingString
-		} else {
+		}
+		else if (audioPlayer.isPlaying) {
+			print("audioplayer is playing")
+			if GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.hour] != "" {
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.hour])
+			} else {
+				var searchURL:String = ""
+				GlobalVars.searchHour = GlobalVars.hour
+				while (searchURL == "") {
+					if(GlobalVars.searchHour > 0){
+						GlobalVars.searchHour -= 1
+					} else {
+						GlobalVars.searchHour = 23
+					}
+					if(GlobalVars.searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchURL = GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.searchHour])
+				print(nowPlayingString)
+				songLabel.text = nowPlayingString
+			}
+		}
+		else {
+			print("neither is playing")
 			songLabel.text = ""
 		}
 		
-		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
+		if (GlobalVars.musicStarted) {
 			GlobalVars.musicStarted = true
 			controlButton.accessibilityLabel = "Pause Button"
 			controlButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
@@ -454,144 +310,72 @@ class FirstViewController: UIViewController{
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+		print("list \(GlobalVars.selectedMusicList)")
+		
+		UIApplication.shared.beginReceivingRemoteControlEvents()
+		let commandCenter = MPRemoteCommandCenter.shared()
+		commandCenter.pauseCommand.isEnabled = true
+		commandCenter.playCommand.isEnabled = true
+		commandCenter.nextTrackCommand.isEnabled = false
+		commandCenter.previousTrackCommand.isEnabled = false
+
+		commandCenter.playCommand.addTarget { [unowned self] event in
+				if !audioPlayer.isPlaying {
+					//musicHandler.updateMusic()
+					audioPlayer.play()
+					GlobalVars.musicStarted = true
+					print("music play")
+					return .success
+				}
+				return .commandFailed
+			}
+
+			// Add handler for Pause Command
+			commandCenter.pauseCommand.addTarget { [unowned self] event in
+				if audioPlayer.isPlaying {
+					audioPlayer.pause()
+					GlobalVars.musicStarted = false
+					print("music pause")
+					return .success
+				}
+				return .commandFailed
+			}
 		
 		musicPlayer.stop()
+		audioPlayer.stop()
 		GlobalVars.musicStarted = false
 		
 		
 		if(!defaults.bool(forKey: "didRun")){
-			defaults.set("New Horizons", forKey: "selectedTitle")
 			defaults.set(0, forKey: "titleNo")
 			//defaults.set(true, forKey: "didRun")
-			GlobalVars.musicSelectionID0 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-			GlobalVars.musicSelection0 =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
-			GlobalVars.musicSelectionID1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-			GlobalVars.musicSelection1 =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
-			GlobalVars.musicSelectionID2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-			GlobalVars.musicSelection2 =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
-			GlobalVars.musicSelectionID3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-			GlobalVars.musicSelection3 =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
-			GlobalVars.musicSelectionID4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-			GlobalVars.musicSelection4 =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
-			do {
-				try defaults.setObject(GlobalVars.musicSelection0, forKey: "savedMusicSelection0")
-			} catch {
-				//print(error.localizedDescription)
+			for n in 0...4 {
+				print(n)
+				GlobalVars.musicSelectionID[n] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+				GlobalVars.musicSelection[n] =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
+				GlobalVars.musicFormatType[n] = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+				GlobalVars.musicFileURL[n] =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
 			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelectionID0, forKey: "savedMusicSelectionID0")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelection1, forKey: "savedMusicSelection1")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelectionID1, forKey: "savedMusicSelectionID1")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelection2, forKey: "savedMusicSelection2")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelectionID2, forKey: "savedMusicSelectionID2")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelection3, forKey: "savedMusicSelection3")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelectionID3, forKey: "savedMusicSelectionID3")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelection4, forKey: "savedMusicSelection4")
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				try defaults.setObject(GlobalVars.musicSelectionID4, forKey: "savedMusicSelectionID4")
-			} catch {
-				//print(error.localizedDescription)
-			}
+			do {try defaults.setObject(GlobalVars.musicSelection, forKey: "savedMusicSelection")} catch {/*print(error.localizedDescription)*/}
+			do {try defaults.setObject(GlobalVars.musicSelectionID, forKey: "savedMusicSelectionID")} catch {/*print(error.localizedDescription)*/}
+			do {try defaults.setObject(GlobalVars.musicFileURL, forKey: "savedMusicFileURL")} catch {/*print(error.localizedDescription)*/}
+			do {try defaults.setObject(GlobalVars.musicFormatType, forKey: "savedMusicFileURL")} catch {/*print(error.localizedDescription)*/}
 			//print("First App run")
-		} else {
-			do {
-				GlobalVars.musicSelection0 = try defaults.getObject(forKey: "savedMusicSelection0", castTo: [String].self)
-				//print(GlobalVars.musicSelection0)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelectionID0 = try defaults.getObject(forKey: "savedMusicSelectionID0", castTo: [UInt64].self)
-				//print(GlobalVars.musicSelectionID0)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelection1 = try defaults.getObject(forKey: "savedMusicSelection1", castTo: [String].self)
-				//print(GlobalVars.musicSelection1)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelectionID1 = try defaults.getObject(forKey: "savedMusicSelectionID1", castTo: [UInt64].self)
-				//print(GlobalVars.musicSelectionID1)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelection2 = try defaults.getObject(forKey: "savedMusicSelection2", castTo: [String].self)
-				//print(GlobalVars.musicSelection2)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelectionID2 = try defaults.getObject(forKey: "savedMusicSelectionID2", castTo: [UInt64].self)
-				//print(GlobalVars.musicSelectionID2)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelection3 = try defaults.getObject(forKey: "savedMusicSelection3", castTo: [String].self)
-				//print(GlobalVars.musicSelection3)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelectionID3 = try defaults.getObject(forKey: "savedMusicSelectionID3", castTo: [UInt64].self)
-				//print(GlobalVars.musicSelectionID3)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelection4 = try defaults.getObject(forKey: "savedMusicSelection4", castTo: [String].self)
-				//print(GlobalVars.musicSelection4)
-			} catch {
-				//print(error.localizedDescription)
-			}
-			do {
-				GlobalVars.musicSelectionID4 = try defaults.getObject(forKey: "savedMusicSelectionID4", castTo: [UInt64].self)
-				//print(GlobalVars.musicSelectionID4)
-			} catch {
-				//print(error.localizedDescription)
-			}
+			} else {
 			
-			do {
-				GlobalVars.selectedMusicList = try defaults.getObject(forKey: "savedSelectedMusicList", castTo: Int.self)
-				//print(GlobalVars.selectedMusicList)
-			} catch {
-				//print(error.localizedDescription)
-			}
+				if(!defaults.bool(forKey: "didUpdate")){
+					for n in 0...4 {
+						print(n)
+						GlobalVars.musicFormatType[n] = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+						GlobalVars.musicFileURL[n] =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
+					}
+					defaults.set(true, forKey: "didUpdate")
+					print("appjustupdated")
+				}
+				do {GlobalVars.musicSelection = try defaults.getObject(forKey: "savedMusicSelection", castTo: [[String]].self)} catch {/*print(error.localizedDescription)*/}
+				do {GlobalVars.musicSelectionID = try defaults.getObject(forKey: "savedMusicSelectionID", castTo: [[UInt64]].self)} catch {/*print(error.localizedDescription)*/}
+				do {GlobalVars.musicFileURL = try defaults.getObject(forKey: "savedMusicFileURL", castTo: [[String]].self)} catch {/*print(error.localizedDescription)*/}
+				do {GlobalVars.musicFormatType = try defaults.getObject(forKey: "savedMusicFileType", castTo: [[Bool]].self)} catch {/*print(error.localizedDescription)*/}
 			//print("App Ran Before")
 		}
 		
@@ -662,7 +446,6 @@ class FirstViewController: UIViewController{
 	@IBOutlet var gradientView: UIView!
 	
 	override func viewDidAppear(_ animated: Bool) {
-		
 		//print("fuck!")
 		let prevHour = GlobalVars.hour
 		GlobalVars.hour = Calendar.current.component(.hour, from: Date())
@@ -703,7 +486,7 @@ class FirstViewController: UIViewController{
 			
 		}
 		
-		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
+		if (GlobalVars.musicStarted) {
 			GlobalVars.musicStarted = true
 			controlButton.accessibilityLabel = "Pause Button"
 			controlButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
@@ -716,7 +499,21 @@ class FirstViewController: UIViewController{
 		}
 		
 		var foundSong = false
-		switch GlobalVars.selectedMusicList {
+		
+		
+		print("woah! \(GlobalVars.selectedMusicList)")
+		for i in GlobalVars.musicSelectionID[GlobalVars.selectedMusicList] {
+			if (i != 0){
+				foundSong = true
+			}
+		}
+		for i in GlobalVars.musicFileURL[GlobalVars.selectedMusicList] {
+			if (i != ""){
+				foundSong = true
+			}
+		}
+		
+		/*switch GlobalVars.selectedMusicList {
 		case 0:
 			for i in GlobalVars.musicSelectionID0 {
 				if (i != 0){
@@ -753,7 +550,7 @@ class FirstViewController: UIViewController{
 					foundSong = true
 				}
 			}
-		}
+		}*/
 		
 		if !foundSong && defaults.bool(forKey: "didRun") {
 			let errorAlert = UIAlertController(title: "Song Error", message: "No songs found in this track. Please visit the 'Select Music' tab to set a song and get started!", preferredStyle: .alert)
@@ -793,146 +590,29 @@ class FirstViewController: UIViewController{
 		self.view.layoutIfNeeded()
 		
 		var nowPlayingString:String = "Now Playing: "
-		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
-			switch GlobalVars.selectedMusicList {
-			case 0:
-				if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
+		if (musicPlayer.playbackState == MPMusicPlaybackState.playing) {
+			
+			if GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				var searchHour:Int = GlobalVars.hour
+				while (searchID == 0) {
+					if(searchHour > 0){
+						searchHour -= 1
+					} else {
+						searchHour = 23
 					}
-					nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
-				}
-			case 1:
-				if GlobalVars.musicSelectionID1[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection1[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID1[searchHour]
-						
-						//print(searchID)
+					if(searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
 					}
-					nowPlayingString.append(GlobalVars.musicSelection1[searchHour])
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][searchHour]
+					
+					//print(searchID)
 				}
-			case 2:
-				if GlobalVars.musicSelectionID2[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection2[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID2[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection2[searchHour])
-				}
-			case 3:
-				if GlobalVars.musicSelectionID3[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection3[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID3[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection3[searchHour])
-				}
-			case 4:
-				if GlobalVars.musicSelectionID4[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection4[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID4[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection4[searchHour])
-				}
-			default:
-				if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
-				}
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][searchHour])
 			}
 			songLabel.text = nowPlayingString
 		} else {
@@ -942,6 +622,7 @@ class FirstViewController: UIViewController{
 	
 	override func viewWillAppear(_ animated: Bool) {
 		
+		print(AVAudioPlayer().isPlaying)
 		// create the gradient layer
 		let gradient = CAGradientLayer()
 		gradient.frame = self.view.bounds
@@ -1013,56 +694,10 @@ class FirstViewController: UIViewController{
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		gradientView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-		do {
-			try defaults.setObject(GlobalVars.musicSelection0, forKey: "savedMusicSelection0")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID0, forKey: "savedMusicSelectionID0")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection1, forKey: "savedMusicSelection1")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID1, forKey: "savedMusicSelectionID1")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection2, forKey: "savedMusicSelection2")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID2, forKey: "savedMusicSelectionID2")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection3, forKey: "savedMusicSelection3")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID3, forKey: "savedMusicSelectionID3")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection4, forKey: "savedMusicSelection4")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID4, forKey: "savedMusicSelectionID4")
-		} catch {
-			//print(error.localizedDescription)
-		}
+		do {try defaults.setObject(GlobalVars.musicSelection, forKey: "savedMusicSelection")} catch {/*print(error.localizedDescription)*/}
+		do {try defaults.setObject(GlobalVars.musicSelectionID, forKey: "savedMusicSelectionID")} catch {/*print(error.localizedDescription)*/}
+		do {try defaults.setObject(GlobalVars.musicFileURL, forKey: "savedMusicFileURL")} catch {/*print(error.localizedDescription)*/}
+		do {try defaults.setObject(GlobalVars.musicFormatType, forKey: "savedMusicFileType")} catch {/*print(error.localizedDescription)*/}
 	}
 	
 	@IBOutlet weak var controlButton: UIButton!
@@ -1071,171 +706,226 @@ class FirstViewController: UIViewController{
 	
 	
 	@IBAction func play(_ sender: Any) {
+		
+		musicHandler.updateMusic()
 		if(!GlobalVars.musicStarted){
 			
 			
 			GlobalVars.musicStarted = true
-			musicHandler.updateMusic()
-			let musicPlayer = MPMusicPlayerController.applicationMusicPlayer
-			musicPlayer.play()
-			GlobalVars.musicStarted = true
+			if GlobalVars.currentMusicFormat {
+				musicPlayer.play()
+			} else {
+				audioPlayer.play()
+			}
+			
 			controlButton.accessibilityLabel = "Pause Button"
 			controlButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
 			UIView.animate(withDuration: 0.4,delay:0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0,animations: {self.PlayButtonSize.constant = 130;self.view.layoutIfNeeded()}, completion: nil)
-		}
-		else{
-			let musicPlayer = MPMusicPlayerController.applicationMusicPlayer
-			musicPlayer.pause()
+			print("Music started: \(GlobalVars.musicStarted)")
+		} else{
+
 			GlobalVars.musicStarted = false
+			musicPlayer.pause()
+			audioPlayer.pause()
+			
 			controlButton.accessibilityLabel = "Play Button"
 			controlButton.setBackgroundImage(UIImage(systemName: "play.circle"), for: UIControl.State.normal)
 			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0,animations: {self.PlayButtonSize.constant = 90;self.view.layoutIfNeeded()}, completion: nil)
-				
+			print("Music started: \(GlobalVars.musicStarted)")
 		}
 		var nowPlayingString:String = "Now Playing: "
-		if (MPMusicPlayerController.applicationMusicPlayer.playbackState == MPMusicPlaybackState.playing) {
-			switch GlobalVars.selectedMusicList {
-			case 0:
-				if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
-				}
-			case 1:
-				if GlobalVars.musicSelectionID1[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection1[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID1[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection1[searchHour])
-				}
-			case 2:
-				if GlobalVars.musicSelectionID2[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection2[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID2[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection2[searchHour])
-				}
-			case 3:
-				if GlobalVars.musicSelectionID3[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection3[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID3[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection3[searchHour])
-				}
-			case 4:
-				if GlobalVars.musicSelectionID4[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection4[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID4[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection4[searchHour])
-				}
-			default:
-				if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
-					nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
-				} else {
-					var searchID:UInt64 = 0
-					var searchHour:Int = GlobalVars.hour
-					while (searchID == 0) {
-						if(searchHour > 0){
-							searchHour -= 1
-						} else {
-							searchHour = 23
-						}
-						if(searchHour == GlobalVars.hour){
-							//print("no songs found!")
-							break
-						}
-						//print("searching ", searchHour)
-						searchID = GlobalVars.musicSelectionID0[searchHour]
-						
-						//print(searchID)
-					}
-					nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
-				}
-			}
-			songLabel.text = nowPlayingString
+		if (musicPlayer.playbackState == MPMusicPlaybackState.playing) {
+		
+		if GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.hour] != 0 {
+			nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.hour])
 		} else {
+			var searchID:UInt64 = 0
+			GlobalVars.searchHour = GlobalVars.hour
+			while (searchID == 0) {
+				if(GlobalVars.searchHour > 0){
+					GlobalVars.searchHour -= 1
+				} else {
+					GlobalVars.searchHour = 23
+				}
+				if(GlobalVars.searchHour == GlobalVars.hour){
+					//print("no songs found!")
+					break
+				}
+				//print("searching ", searchHour)
+				searchID = GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][GlobalVars.searchHour]
+				
+				//print(searchID)
+			}
+			nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.searchHour])
+		}
+		
+		/*switch GlobalVars.selectedMusicList {
+		case 0:
+			if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				var searchHour:Int = GlobalVars.hour
+				while (searchID == 0) {
+					if(searchHour > 0){
+						searchHour -= 1
+					} else {
+						searchHour = 23
+					}
+					if(searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID0[searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
+			}
+		case 1:
+			if GlobalVars.musicSelectionID1[GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection1[GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				var searchHour:Int = GlobalVars.hour
+				while (searchID == 0) {
+					if(searchHour > 0){
+						searchHour -= 1
+					} else {
+						searchHour = 23
+					}
+					if(searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID1[searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection1[searchHour])
+			}
+		case 2:
+			if GlobalVars.musicSelectionID2[GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection2[GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				var searchHour:Int = GlobalVars.hour
+				while (searchID == 0) {
+					if(searchHour > 0){
+						searchHour -= 1
+					} else {
+						searchHour = 23
+					}
+					if(searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID2[searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection2[searchHour])
+			}
+		case 3:
+			if GlobalVars.musicSelectionID3[GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection3[GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				var searchHour:Int = GlobalVars.hour
+				while (searchID == 0) {
+					if(searchHour > 0){
+						searchHour -= 1
+					} else {
+						searchHour = 23
+					}
+					if(searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID3[searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection3[searchHour])
+			}
+		case 4:
+			if GlobalVars.musicSelectionID4[GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection4[GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				var searchHour:Int = GlobalVars.hour
+				while (searchID == 0) {
+					if(searchHour > 0){
+						searchHour -= 1
+					} else {
+						searchHour = 23
+					}
+					if(searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID4[searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection4[searchHour])
+			}
+		default:
+			if GlobalVars.musicSelectionID0[GlobalVars.hour] != 0 {
+				nowPlayingString.append(GlobalVars.musicSelection0[GlobalVars.hour])
+			} else {
+				var searchID:UInt64 = 0
+				var searchHour:Int = GlobalVars.hour
+				while (searchID == 0) {
+					if(searchHour > 0){
+						searchHour -= 1
+					} else {
+						searchHour = 23
+					}
+					if(searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchID = GlobalVars.musicSelectionID0[searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection0[searchHour])
+			}
+		}*/
+		songLabel.text = nowPlayingString
+		}
+		else if (audioPlayer.isPlaying) {
+			if GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.hour] != "" {
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.hour])
+			} else {
+				var searchURL:String = ""
+				GlobalVars.searchHour = GlobalVars.hour
+				while (searchURL == "") {
+					if(GlobalVars.searchHour > 0){
+						GlobalVars.searchHour -= 1
+					} else {
+						GlobalVars.searchHour = 23
+					}
+					if(GlobalVars.searchHour == GlobalVars.hour){
+						//print("no songs found!")
+						break
+					}
+					//print("searching ", searchHour)
+					searchURL = GlobalVars.musicFileURL[GlobalVars.selectedMusicList][GlobalVars.searchHour]
+					
+					//print(searchID)
+				}
+				nowPlayingString.append(GlobalVars.musicSelection[GlobalVars.selectedMusicList][GlobalVars.searchHour])
+			}
+		}
+		else {
 			songLabel.text = ""
 		}
 	}

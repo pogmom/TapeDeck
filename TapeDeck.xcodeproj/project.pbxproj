@@ -29,6 +29,8 @@
 		BDE56CC325186B0C00A47239 /* hssceneExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BDE56CB825186B0500A47239 /* hssceneExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BDE56CCB25186C4100A47239 /* FinkHeavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDB53FCC250765A1004E9788 /* FinkHeavy.ttf */; };
 		BDE8138F2507422100371570 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8138E2507422100371570 /* ThirdViewController.swift */; };
+		BDF7489D2616C0D900877F21 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = BDF7489C2616C0D900877F21 /* SwiftyJSON */; };
+		BDF748A42616C11500877F21 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = BDF748A32616C11500877F21 /* Zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,7 +108,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDF7489D2616C0D900877F21 /* SwiftyJSON in Frameworks */,
 				BD7D35DB2510111700A61B6B /* SwiftyGif in Frameworks */,
+				BDF748A42616C11500877F21 /* Zip in Frameworks */,
 				BD7A5E39251034D7003E992C /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +260,8 @@
 			name = grandfatherrock;
 			packageProductDependencies = (
 				BD7D35DA2510111700A61B6B /* SwiftyGif */,
+				BDF7489C2616C0D900877F21 /* SwiftyJSON */,
+				BDF748A32616C11500877F21 /* Zip */,
 			);
 			productName = grandfatherrock;
 			productReference = BDA060F62447F3E6009C72CE /* Nook Music.app */;
@@ -351,6 +357,8 @@
 			mainGroup = BDA060ED2447F3E5009C72CE;
 			packageReferences = (
 				BD7D35D92510111700A61B6B /* XCRemoteSwiftPackageReference "SwiftyGif" */,
+				BDF7489B2616C0D900877F21 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				BDF748A22616C11500877F21 /* XCRemoteSwiftPackageReference "Zip" */,
 			);
 			productRefGroup = BDA060F72447F3E6009C72CE /* Products */;
 			projectDirPath = "";
@@ -605,7 +613,7 @@
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -613,7 +621,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock;
 				PRODUCT_NAME = "Nook Music";
 				SUPPORTS_MACCATALYST = NO;
@@ -631,7 +639,7 @@
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -639,7 +647,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock;
 				PRODUCT_NAME = "Nook Music";
 				SUPPORTS_MACCATALYST = NO;
@@ -741,7 +749,7 @@
 				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = hsscene/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -750,7 +758,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -769,7 +777,7 @@
 				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = hsscene/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -778,7 +786,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -848,6 +856,22 @@
 				minimumVersion = 5.3.0;
 			};
 		};
+		BDF7489B2616C0D900877F21 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		BDF748A22616C11500877F21 /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -855,6 +879,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BD7D35D92510111700A61B6B /* XCRemoteSwiftPackageReference "SwiftyGif" */;
 			productName = SwiftyGif;
+		};
+		BDF7489C2616C0D900877F21 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDF7489B2616C0D900877F21 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		BDF748A32616C11500877F21 /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDF748A22616C11500877F21 /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

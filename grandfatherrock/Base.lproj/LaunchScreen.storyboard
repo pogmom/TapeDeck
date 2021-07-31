@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,32 +15,43 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="erM-YB-Vzk">
-                                <rect key="frame" x="123.5" y="269.5" width="128" height="128"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tzs-7w-lyi">
+                                <rect key="frame" x="100" y="384" width="214" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="erM-YB-Vzk" secondAttribute="height" multiplier="1:1" id="0TT-ZM-7es"/>
-                                    <constraint firstAttribute="width" constant="128" id="xCb-tz-RTW"/>
+                                    <constraint firstAttribute="width" secondItem="tzs-7w-lyi" secondAttribute="height" multiplier="77:46" id="axO-24-MFU"/>
                                 </constraints>
+                                <imageReference key="image" image="Micah Gomez"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zuj-Ek-bSV">
+                                <rect key="frame" x="100" y="347" width="214" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="erM-YB-Vzk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9Sw-2e-l2R"/>
-                            <constraint firstItem="erM-YB-Vzk" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Mtq-Xq-8oK"/>
+                            <constraint firstItem="tzs-7w-lyi" firstAttribute="leading" secondItem="Zuj-Ek-bSV" secondAttribute="leading" id="L95-JJ-ciP"/>
+                            <constraint firstItem="tzs-7w-lyi" firstAttribute="top" secondItem="Zuj-Ek-bSV" secondAttribute="bottom" constant="8" symbolic="YES" id="Let-P6-Mj6"/>
+                            <constraint firstItem="tzs-7w-lyi" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Nd0-O8-MaK"/>
+                            <constraint firstItem="tzs-7w-lyi" firstAttribute="trailing" secondItem="Zuj-Ek-bSV" secondAttribute="trailing" id="PnO-Jq-5bD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tzs-7w-lyi" secondAttribute="trailing" constant="100" id="T4A-hC-jCR"/>
+                            <constraint firstItem="tzs-7w-lyi" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mO4-py-5Sy"/>
+                            <constraint firstItem="tzs-7w-lyi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="sS2-OU-O7z"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+            <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImage" width="768" height="768"/>
+        <image name="Micah Gomez" width="385.5" height="230.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

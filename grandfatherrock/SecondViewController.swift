@@ -81,7 +81,16 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		cell.accessibilityLabel = cell.hourLabel.text
 		cell.accessibilityLabel?.append(". ")
 		
-		switch GlobalVars.selectedMusicList {
+		cell.songLabel?.text = GlobalVars.musicSelection[GlobalVars.selectedMusicList][indexPath.row]
+		if ((GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][indexPath.row] == 0) && (GlobalVars.musicFileURL[GlobalVars.selectedMusicList][indexPath.row] == "")){
+			cell.accessoryType = .detailButton
+			cell.accessibilityLabel?.append("No song set")
+		} else {
+			cell.accessoryType = .none
+			cell.accessibilityLabel?.append(cell.songLabel.text!)
+		}
+		
+		/*switch GlobalVars.selectedMusicList {
 			case 0:
 				cell.songLabel?.text = GlobalVars.musicSelection0[indexPath.row]
 				if (GlobalVars.musicSelectionID0[indexPath.row] == 0){
@@ -131,7 +140,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 				cell.songLabel?.text = "uh oh!"
 				cell.accessoryType = .detailButton
 				cell.accessibilityLabel?.append("No song set")
-		}
+		}*/
 		
 		cell.accessibilityHint?.append("Press to set a song for this hour")
 		
@@ -146,7 +155,13 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
 		if editingStyle == .delete
 		 {
-			switch GlobalVars.selectedMusicList {
+			
+			GlobalVars.musicSelection[GlobalVars.selectedMusicList][indexPath.row] = ""
+			GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][indexPath.row] = 0
+			GlobalVars.musicFileURL[GlobalVars.selectedMusicList][indexPath.row] = ""
+			GlobalVars.musicFormatType[GlobalVars.selectedMusicList][indexPath.row] = true
+			
+			/*switch GlobalVars.selectedMusicList {
 				case 0:
 					GlobalVars.musicSelection0[indexPath.row] = ""
 					GlobalVars.musicSelectionID0[indexPath.row] = 0
@@ -165,7 +180,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 				default:
 					GlobalVars.musicSelection0[indexPath.row] = ""
 					GlobalVars.musicSelectionID0[indexPath.row] = 0
-			}
+			}*/
 			
 			hoursTable.reloadData()
 			
@@ -177,15 +192,31 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
 		
-		//let mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.music)
-		tableHour = indexPath.row
-		//print(tableHour)
-		present(mediaPicker, animated: true, completion: nil)
-		/*if (selectedSong != "") {
-			GlobalVars.musicSelection[indexPath.row] = selectedSong
-			selectedSong = ""
+		let alert = UIAlertController(title: "Where do you want to select music from?", message: "", preferredStyle: .actionSheet)
+		alert.popoverPresentationController?.sourceView = self.view
+		alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+		if (UIDevice.current.userInterfaceIdiom == .pad){
+			alert.popoverPresentationController!.permittedArrowDirections = []
 		}
-		self.hoursTable.reloadData()*/
+		//shareMenu.popoverPresentationController.sourceView = self.view
+		//shareMenu.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
+
+		alert.addAction(UIAlertAction(title: "From Music App", style: .default, handler: {_ in
+			self.tableHour = indexPath.row
+			self.present(self.mediaPicker, animated: true, completion: nil)
+		}))
+		alert.addAction(UIAlertAction(title: "From File", style: .default, handler: {_ in
+			let NotificationVC = self.storyboard?.instantiateViewController(withIdentifier: "FourthViewController") as! UIViewController
+			GlobalVars.selectedCell = indexPath.row
+			NotificationVC.modalPresentationStyle = .fullScreen
+			self.present(NotificationVC, animated: true, completion: nil)
+			
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
+			
+		}))
+
+		self.present(alert, animated: true)
 	}
 	
 	
@@ -223,9 +254,18 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		//print("selected song")
 		selectedSong = String(mediaItemCollection.items[0].title ?? "NOTHING")
 		//print(selectedSong)
+		/*
+		GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][tableHour] = mediaItemCollection.items[0].persistentID
+		GlobalVars.musicSelection[GlobalVars.selectedMusicList][tableHour] = selectedSong
+		*/
+		GlobalVars.musicSelection[GlobalVars.selectedMusicList][tableHour] = selectedSong
+		GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][tableHour] = mediaItemCollection.items[0].persistentID
+		GlobalVars.musicFileURL[GlobalVars.selectedMusicList][tableHour] = ""
+		GlobalVars.musicFormatType[GlobalVars.selectedMusicList][tableHour] = true
+		
 		
 		//print(GlobalVars.selectedMusicList)
-		switch GlobalVars.selectedMusicList {
+		/*switch GlobalVars.selectedMusicList {
 			case 0:
 				GlobalVars.musicSelectionID0[tableHour] = mediaItemCollection.items[0].persistentID
 				GlobalVars.musicSelection0[tableHour] = selectedSong
@@ -244,7 +284,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 			default:
 				GlobalVars.musicSelectionID0[tableHour] = mediaItemCollection.items[0].persistentID
 				GlobalVars.musicSelection0[tableHour] = selectedSong
-		}
+		}*/
 		
 		//GlobalVars.musicSelectionID1[tableHour] = mediaItemCollection.items[0].persistentID
 		//GlobalVars.musicSelection1[tableHour] = selectedSong
@@ -271,8 +311,10 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBAction func selectListControlChanged(_ sender: Any) {
 		
 		MPMusicPlayerController.applicationMusicPlayer.stop()
+		audioPlayer.stop()
 		
 		GlobalVars.selectedMusicList = selectListControl.selectedSegmentIndex
+		defaults.set(selectListControl.selectedSegmentIndex, forKey: "savedSelectedMusicList")
 		//print(GlobalVars.selectedMusicList)
 		hoursTable.reloadData()
 		/*var noSongs = false
@@ -345,10 +387,11 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		hoursTable.dataSource = self
 		
 		selectListControl.selectedSegmentIndex = GlobalVars.selectedMusicList
-		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
+		
+		hoursTable.reloadData()
 		
 		let prevHour = GlobalVars.hour
 		GlobalVars.hour = Calendar.current.component(.hour, from: Date())
@@ -402,85 +445,13 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		// add the gradient to the view
 		gradientView.layer.addSublayer(gradient)
 		
-		switch GlobalVars.selectedMusicList {
-			case 0:
-				//print(GlobalVars.musicSelectionID0)
-				print(GlobalVars.musicSelection0)
-			case 1:
-				//print(GlobalVars.musicSelectionID1)
-				print(GlobalVars.musicSelection1)
-			case 2:
-				//print(GlobalVars.musicSelectionID2)
-				print(GlobalVars.musicSelection2)
-			case 3:
-				//print(GlobalVars.musicSelectionID3)
-				print(GlobalVars.musicSelection3)
-			case 4:
-				//print(GlobalVars.musicSelectionID4)
-				print(GlobalVars.musicSelection4)
-			default:
-				//print(GlobalVars.musicSelectionID0)
-				print(GlobalVars.musicSelection0)
-		}
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
-		do {
-			try defaults.setObject(GlobalVars.musicSelection0, forKey: "savedMusicSelection0")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID0, forKey: "savedMusicSelectionID0")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection1, forKey: "savedMusicSelection1")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID1, forKey: "savedMusicSelectionID1")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection2, forKey: "savedMusicSelection2")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID2, forKey: "savedMusicSelectionID2")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection3, forKey: "savedMusicSelection3")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID3, forKey: "savedMusicSelectionID3")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelection4, forKey: "savedMusicSelection4")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		do {
-			try defaults.setObject(GlobalVars.musicSelectionID4, forKey: "savedMusicSelectionID4")
-		} catch {
-			//print(error.localizedDescription)
-		}
-		
-		do {
-			try defaults.setObject(GlobalVars.selectedMusicList, forKey: "savedSelectedMusicList")
-		} catch {
-			//print(error.localizedDescription)
-		}
+		do {try defaults.setObject(GlobalVars.musicSelection, forKey: "savedMusicSelection")} catch {/*print(error.localizedDescription)*/}
+		do {try defaults.setObject(GlobalVars.musicSelectionID, forKey: "savedMusicSelectionID")} catch {/*print(error.localizedDescription)*/}
+		do {try defaults.setObject(GlobalVars.musicFileURL, forKey: "savedMusicFileURL")} catch {/*print(error.localizedDescription)*/}
+		do {try defaults.setObject(GlobalVars.musicFormatType, forKey: "savedMusicFileType")} catch {/*print(error.localizedDescription)*/}
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
