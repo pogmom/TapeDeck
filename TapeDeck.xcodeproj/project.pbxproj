@@ -613,7 +613,7 @@
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -621,7 +621,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock;
 				PRODUCT_NAME = "Nook Music";
 				SUPPORTS_MACCATALYST = NO;
@@ -639,7 +639,7 @@
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -647,7 +647,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock;
 				PRODUCT_NAME = "Nook Music";
 				SUPPORTS_MACCATALYST = NO;
@@ -749,7 +749,7 @@
 				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = hsscene/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -758,7 +758,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -777,7 +777,7 @@
 				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = hsscene/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -786,7 +786,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

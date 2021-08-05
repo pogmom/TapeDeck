@@ -76,6 +76,17 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 			hourString = String(rowHour)
 			hourString.append(" PM")
 		}
+		
+		var weather = ""
+		if GlobalVars.weatherList == 0 {
+			weather = "☀️ "
+		} else if GlobalVars.weatherList == 1 {
+			weather = "🌧 "
+		} else if GlobalVars.weatherList == 2 {
+			weather = "❄️ "
+		}
+		
+		hourString = "\(weather)\(hourString)"
 
 		cell.hourLabel?.text = hourString
 		cell.accessibilityLabel = cell.hourLabel.text
@@ -308,60 +319,43 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	
 	@IBOutlet var selectListControl: UISegmentedControl!
 	
+	@IBOutlet var selectListWeatherControl: UISegmentedControl!
+	
 	@IBAction func selectListControlChanged(_ sender: Any) {
 		
 		MPMusicPlayerController.applicationMusicPlayer.stop()
 		audioPlayer.stop()
-		
-		GlobalVars.selectedMusicList = selectListControl.selectedSegmentIndex
-		defaults.set(selectListControl.selectedSegmentIndex, forKey: "savedSelectedMusicList")
-		//print(GlobalVars.selectedMusicList)
-		hoursTable.reloadData()
-		/*var noSongs = false
-		switch GlobalVars.selectedMusicList {
-			case 0:
-				for i in GlobalVars.musicSelectionID0 {
-					if (i == 0){
-						noSongs = true
-					}
-				}
-			case 1:
-				for i in GlobalVars.musicSelectionID1 {
-					if (i == 0){
-						noSongs = true
-					}
-				}
-			case 2:
-				for i in GlobalVars.musicSelectionID2 {
-					if (i == 0){
-						noSongs = true
-					}
-				}
-			case 3:
-				for i in GlobalVars.musicSelectionID3 {
-					if (i == 0){
-						noSongs = true
-					}
-				}
-			case 4:
-				for i in GlobalVars.musicSelectionID4 {
-					if (i == 0){
-						noSongs = true
-					}
-				}
-			default:
-				for i in GlobalVars.musicSelectionID0 {
-					if (i == 0){
-						noSongs = true
-					}
-				}
+		musicPlayer.stop()
+		var list = selectListControl.selectedSegmentIndex
+		if selectListWeatherControl.selectedSegmentIndex == 0 {
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if selectListWeatherControl.selectedSegmentIndex == 1 {
+			list = list + 5
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if selectListWeatherControl.selectedSegmentIndex == 2 {
+			list = list + 10
+			let backImg: UIImage = UIImage(named: "grasssnow")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
 		}
 		
-		if noSongs {
-			MPMusicPlayerController.applicationMusicPlayer.pause()
-			//print("pausing")
-		}*/
+		GlobalVars.selectedMusicList = list
+		GlobalVars.weatherList = selectListWeatherControl.selectedSegmentIndex
 		
+		print("selected playlist is \(list)")
+		
+		print("saving savedSelectedList to \(selectListControl.selectedSegmentIndex)")
+		defaults.set(selectListControl.selectedSegmentIndex, forKey: "savedSelectedList")
+		print("saving savedSelectedMusicList to \(selectListControl.selectedSegmentIndex)")
+		defaults.set(selectListControl.selectedSegmentIndex, forKey: "savedSelectedMusicList")
+		print("saving savedWeatherList to \(selectListWeatherControl.selectedSegmentIndex)")
+		defaults.set(selectListWeatherControl.selectedSegmentIndex, forKey: "savedWeatherList")
+		//print(GlobalVars.selectedMusicList)
+		hoursTable.reloadData()
 		musicHandler.updateMusic()
 		//print("updating")
 	}
@@ -418,33 +412,25 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		}
 		
 		gradient.locations =  [0.00, 1.00]
-
-		/*let gradientChangeAnimation = CABasicAnimation(keyPath: "colors")
-		gradientChangeAnimation.duration = 5.0
-		if((GlobalVars.hour >= 8) && (GlobalVars.hour <= 19)){ //Daytime
-			//print("day")
-			gradientChangeAnimation.toValue = [UIColor(red: 0.00, green: 0.31, blue: 0.59, alpha: 1).cgColor, UIColor(red: 0.07, green: 0.45, blue: 0.87, alpha: 1).cgColor]
-		} else if((GlobalVars.hour >= 20) && (GlobalVars.hour <= 21)){//Sunset
-			//print("sunset")
-			gradientChangeAnimation.toValue = [UIColor(red: 0.00, green: 0.31, blue: 0.59, alpha: 1).cgColor, UIColor(red: 1.00, green: 0.61, blue: 0.43, alpha: 1).cgColor]
-		} else if((GlobalVars.hour >= 22) || (GlobalVars.hour <= 5)){//Night
-			//print("night")
-			gradientChangeAnimation.toValue = [
-				UIColor(red: 0.68, green: 0.67, blue: 1.0, alpha: 1).cgColor,
-				UIColor(red: 1.00, green: 0.00, blue: 0.09, alpha: 1).cgColor
-			]
-		} else if((GlobalVars.hour >= 6) && (GlobalVars.hour <= 7)){//Sunrise
-			//print("sunrise")
-			gradientChangeAnimation.toValue = [UIColor(red: 0.02, green: 0.26, blue: 0.49, alpha: 1).cgColor, UIColor(red: 0.89, green: 0.68, blue: 0.60, alpha: 1).cgColor]
-		}
-		gradientChangeAnimation.autoreverses = true
-		gradientChangeAnimation.fillMode = CAMediaTimingFillMode.forwards
-		gradientChangeAnimation.isRemovedOnCompletion = false
-		gradient.add(gradientChangeAnimation, forKey: "colorChange")
-		*/
-		// add the gradient to the view
+		
 		gradientView.layer.addSublayer(gradient)
 		
+		print("list is supposed to be \(GlobalVars.selectedList) in home screen")
+		print("weather list is supposed to be \(GlobalVars.weatherList) in music screen")
+		selectListWeatherControl.selectedSegmentIndex = GlobalVars.weatherList
+		if GlobalVars.weatherList == 0 {
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if GlobalVars.weatherList == 1 {
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if GlobalVars.weatherList == 2 {
+			let backImg: UIImage = UIImage(named: "grasssnow")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
+		}
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -452,6 +438,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		do {try defaults.setObject(GlobalVars.musicSelectionID, forKey: "savedMusicSelectionID")} catch {/*print(error.localizedDescription)*/}
 		do {try defaults.setObject(GlobalVars.musicFileURL, forKey: "savedMusicFileURL")} catch {/*print(error.localizedDescription)*/}
 		do {try defaults.setObject(GlobalVars.musicFormatType, forKey: "savedMusicFileType")} catch {/*print(error.localizedDescription)*/}
+		do {try defaults.setObject(GlobalVars.weatherList, forKey: "savedWeatherList")} catch {/*print(error.localizedDescription)*/}
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {

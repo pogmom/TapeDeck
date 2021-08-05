@@ -166,8 +166,8 @@ public class musicHandler{
 				audioPlayer.play()
 				let mpic = MPNowPlayingInfoCenter.default()
 						mpic.nowPlayingInfo = [
-							MPMediaItemPropertyTitle:"This Is a Test",
-							MPMediaItemPropertyArtist:"Matt Neuburg"
+							MPMediaItemPropertyTitle:"AC Tape Deck",
+							MPMediaItemPropertyArtist:"Micah Gomez"
 						]
 			}
 		}
@@ -196,14 +196,16 @@ public class musicHandler{
 }
 
 struct GlobalVars {
-	static var musicSelectionID:[[UInt64]] = [[UInt64]](repeating: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], count: 5)
-	static var musicSelection:[[String]] = [[String]](repeating: ["","","","","","","","","","","","","","","","","","","","","","","",""], count: 5)
-	static var musicFileURL:[[String]] = [[String]](repeating: ["","","","","","","","","","","","","","","","","","","","","","","",""], count: 5)
-	static var musicFormatType:[[Bool]] = [[Bool]](repeating: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false], count: 5)
+	static var musicSelectionID:[[UInt64]] = [[UInt64]](repeating: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], count: 15)
+	static var musicSelection:[[String]] = [[String]](repeating: ["","","","","","","","","","","","","","","","","","","","","","","",""], count: 15)
+	static var musicFileURL:[[String]] = [[String]](repeating: ["","","","","","","","","","","","","","","","","","","","","","","",""], count: 15)
+	static var musicFormatType:[[Bool]] = [[Bool]](repeating: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false], count: 15)
 	
 	static var selectedCell:Int? = nil
 	
 	static var selectedMusicList:Int = UserDefaults.standard.integer(forKey: "savedSelectedMusicList")
+	static var selectedList:Int = UserDefaults.standard.integer(forKey: "savedSelectedList")
+	static var weatherList:Int = UserDefaults.standard.integer(forKey: "savedWeatherList")
 	static var musicStarted = false
 	static var currentMusicFormat:Bool = false
 	static var titleName = UserDefaults.standard.string(forKey: "selectedTitle")
@@ -349,7 +351,7 @@ class FirstViewController: UIViewController{
 		if(!defaults.bool(forKey: "didRun")){
 			defaults.set(0, forKey: "titleNo")
 			//defaults.set(true, forKey: "didRun")
-			for n in 0...4 {
+			for n in 0...14 {
 				print(n)
 				GlobalVars.musicSelectionID[n] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 				GlobalVars.musicSelection[n] =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
@@ -364,7 +366,7 @@ class FirstViewController: UIViewController{
 			} else {
 			
 				if(!defaults.bool(forKey: "didUpdate")){
-					for n in 0...4 {
+					for n in 0...14 {
 						print(n)
 						GlobalVars.musicFormatType[n] = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 						GlobalVars.musicFileURL[n] =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
@@ -372,10 +374,27 @@ class FirstViewController: UIViewController{
 					defaults.set(true, forKey: "didUpdate")
 					print("appjustupdated")
 				}
+				if(!defaults.bool(forKey: "didUpdate2")){
+					for n in 5...14 {
+						print(n)
+						GlobalVars.musicFormatType[n] = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+						GlobalVars.musicFileURL[n] =  ["","","","","","","","","","","","","","","","","","","","","","","",""]
+						GlobalVars.musicSelection[n] = ["","","","","","","","","","","","","","","","","","","","","","","",""]
+						GlobalVars.musicSelectionID[n] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+					}
+					do {try defaults.setObject(GlobalVars.musicSelection, forKey: "savedMusicSelection")} catch {/*print(error.localizedDescription)*/}
+					do {try defaults.setObject(GlobalVars.musicSelectionID, forKey: "savedMusicSelectionID")} catch {/*print(error.localizedDescription)*/}
+					do {try defaults.setObject(GlobalVars.musicFileURL, forKey: "savedMusicFileURL")} catch {/*print(error.localizedDescription)*/}
+					do {try defaults.setObject(GlobalVars.musicFormatType, forKey: "savedMusicFileType")} catch {/*print(error.localizedDescription)*/}
+					defaults.set(true, forKey: "didUpdate2")
+					print("appjustupdated")
+				}
 				do {GlobalVars.musicSelection = try defaults.getObject(forKey: "savedMusicSelection", castTo: [[String]].self)} catch {/*print(error.localizedDescription)*/}
 				do {GlobalVars.musicSelectionID = try defaults.getObject(forKey: "savedMusicSelectionID", castTo: [[UInt64]].self)} catch {/*print(error.localizedDescription)*/}
 				do {GlobalVars.musicFileURL = try defaults.getObject(forKey: "savedMusicFileURL", castTo: [[String]].self)} catch {/*print(error.localizedDescription)*/}
 				do {GlobalVars.musicFormatType = try defaults.getObject(forKey: "savedMusicFileType", castTo: [[Bool]].self)} catch {/*print(error.localizedDescription)*/}
+				do {GlobalVars.selectedMusicList = try defaults.getObject(forKey: "savedSelectedMusicList", castTo: Int.self)} catch {/*print(error.localizedDescription)*/}
+				do {GlobalVars.selectedList = try defaults.getObject(forKey: "savedSelectedList", castTo: Int.self)} catch {/*print(error.localizedDescription)*/}
 			//print("App Ran Before")
 		}
 		
@@ -513,45 +532,6 @@ class FirstViewController: UIViewController{
 			}
 		}
 		
-		/*switch GlobalVars.selectedMusicList {
-		case 0:
-			for i in GlobalVars.musicSelectionID0 {
-				if (i != 0){
-					foundSong = true
-				}
-			}
-		case 1:
-			for i in GlobalVars.musicSelectionID1 {
-				if (i != 0){
-					foundSong = true
-				}
-			}
-		case 2:
-			for i in GlobalVars.musicSelectionID2 {
-				if (i != 0){
-					foundSong = true
-				}
-			}
-		case 3:
-			for i in GlobalVars.musicSelectionID3 {
-				if (i != 0){
-					foundSong = true
-				}
-			}
-		case 4:
-			for i in GlobalVars.musicSelectionID4 {
-				if (i != 0){
-					foundSong = true
-				}
-			}
-		default:
-			for i in GlobalVars.musicSelectionID0 {
-				if (i != 0){
-					foundSong = true
-				}
-			}
-		}*/
-		
 		if !foundSong && defaults.bool(forKey: "didRun") {
 			let errorAlert = UIAlertController(title: "Song Error", message: "No songs found in this track. Please visit the 'Select Music' tab to set a song and get started!", preferredStyle: .alert)
 			
@@ -663,33 +643,28 @@ class FirstViewController: UIViewController{
 		
 		gradient.locations =  [0.00, 1.00]
 		
-		/*let gradientChangeAnimation = CABasicAnimation(keyPath: "colors")
-		gradientChangeAnimation.duration = 5.0
-		if((GlobalVars.hour >= 8) && (GlobalVars.hour <= 19)){ //Daytime
-		//print("day")
-		gradientChangeAnimation.toValue = [UIColor(red: 0.00, green: 0.31, blue: 0.59, alpha: 1).cgColor, UIColor(red: 0.07, green: 0.45, blue: 0.87, alpha: 1).cgColor]
-		} else if((GlobalVars.hour >= 20) && (GlobalVars.hour <= 21)){//Sunset
-		//print("sunset")
-		gradientChangeAnimation.toValue = [UIColor(red: 0.00, green: 0.31, blue: 0.59, alpha: 1).cgColor, UIColor(red: 1.00, green: 0.61, blue: 0.43, alpha: 1).cgColor]
-		} else if((GlobalVars.hour >= 22) || (GlobalVars.hour <= 5)){//Night
-		//print("night")
-		gradientChangeAnimation.toValue = [
-		UIColor(red: 0.68, green: 0.67, blue: 1.0, alpha: 1).cgColor,
-		UIColor(red: 1.00, green: 0.00, blue: 0.09, alpha: 1).cgColor
-		]
-		} else if((GlobalVars.hour >= 6) && (GlobalVars.hour <= 7)){//Sunrise
-		//print("sunrise")
-		gradientChangeAnimation.toValue = [UIColor(red: 0.02, green: 0.26, blue: 0.49, alpha: 1).cgColor, UIColor(red: 0.89, green: 0.68, blue: 0.60, alpha: 1).cgColor]
-		}
-		gradientChangeAnimation.autoreverses = true
-		gradientChangeAnimation.fillMode = CAMediaTimingFillMode.forwards
-		gradientChangeAnimation.isRemovedOnCompletion = false
-		gradient.add(gradientChangeAnimation, forKey: "colorChange")
-		*/
-		// add the gradient to the view
 		gradientView.layer.addSublayer(gradient)
 		
 		
+		// MARK: CHANGE TAB BAR IMAGE
+		//navigationController?.navigationBar.setBackgroundImage(UIImage(imageLiteralResourceName: "snowgrass"), for: UIBarMetrics.default)
+		
+		print("list is supposed to be \(GlobalVars.selectedList) in home screen")
+		print("weather list is supposed to be \(GlobalVars.weatherList) in home screen")
+		weatherControl.selectedSegmentIndex = GlobalVars.weatherList
+		if GlobalVars.weatherList == 0 {
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if GlobalVars.weatherList == 1 {
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if GlobalVars.weatherList == 2 {
+			let backImg: UIImage = UIImage(named: "grasssnow")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
+		}
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -725,8 +700,8 @@ class FirstViewController: UIViewController{
 		} else{
 
 			GlobalVars.musicStarted = false
-			musicPlayer.pause()
-			audioPlayer.pause()
+			audioPlayer.stop()
+			musicPlayer.stop()
 			
 			controlButton.accessibilityLabel = "Play Button"
 			controlButton.setBackgroundImage(UIImage(systemName: "play.circle"), for: UIControl.State.normal)
@@ -929,6 +904,48 @@ class FirstViewController: UIViewController{
 			songLabel.text = ""
 		}
 	}
+	
+	
+	@IBOutlet var weatherControl: UISegmentedControl!
+	
+	@IBOutlet var barbutton: UITabBarItem!
+	
+	
+	@IBAction func weatherControlChanged(_ sender: Any) {
+		
+		MPMusicPlayerController.applicationMusicPlayer.stop()
+		audioPlayer.stop()
+		musicPlayer.stop()
+		var list = GlobalVars.selectedList
+		if weatherControl.selectedSegmentIndex == 0 {
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if weatherControl.selectedSegmentIndex == 1 {
+			list = list + 5
+			let backImg: UIImage = UIImage(named: "grass")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+		} else if weatherControl.selectedSegmentIndex == 2 {
+			list = list + 10
+			
+			let backImg: UIImage = UIImage(named: "grasssnow")!
+			self.tabBarController?.tabBar.backgroundImage = backImg
+			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
+		}
+		
+		GlobalVars.selectedMusicList = list
+		GlobalVars.weatherList = weatherControl.selectedSegmentIndex
+		
+		print("selected playlist is \(list)")
+		
+		//defaults.set(list, forKey: "savedSelectedList")
+		defaults.set(weatherControl.selectedSegmentIndex, forKey: "savedWeatherList")
+		//print(GlobalVars.selectedMusicList)
+		musicHandler.updateMusic()
+		//print("updating")
+	}
+	
 	
 	/*@objc func updateMusic(){
 	
