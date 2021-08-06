@@ -331,16 +331,19 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			removeAllEffects()
 		} else if selectListWeatherControl.selectedSegmentIndex == 1 {
 			list = list + 5
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			showRain()
 		} else if selectListWeatherControl.selectedSegmentIndex == 2 {
 			list = list + 10
 			let backImg: UIImage = UIImage(named: "grasssnow")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
+			showSnowflakes()
 		}
 		
 		GlobalVars.selectedMusicList = list
@@ -422,14 +425,17 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			removeAllEffects()
 		} else if GlobalVars.weatherList == 1 {
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			showRain()
 		} else if GlobalVars.weatherList == 2 {
 			let backImg: UIImage = UIImage(named: "grasssnow")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
+			showSnowflakes()
 		}
 	}
 	
@@ -453,6 +459,19 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		
 	}
 	
+	@objc func showSnowflakes() {
+		self.removeEffects()
+		self.addSnowflakes()
+	}
+	
+	@objc func showRain() {
+		self.removeEffects()
+		self.addRain()
+	}
+	
+	@objc func removeAllEffects() {
+		self.removeEffects()
+	}
 	
 }
 

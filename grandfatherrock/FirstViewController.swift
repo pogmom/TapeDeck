@@ -49,6 +49,78 @@ extension UserDefaults: ObjectSavable {
 	}
 }
 
+extension UIViewController {
+	
+	func addSnowflakes() {
+		self.view.backgroundColor = UIColor.white
+		let particleEmitter = CAEmitterLayer()
+		particleEmitter.emitterPosition = CGPoint(x: view.center.x, y: -96)
+		particleEmitter.emitterShape = .line
+		particleEmitter.emitterSize = CGSize(width: view.frame.size.width, height: 1)
+		let white = makeEmitterCell(color: UIColor.white)
+		particleEmitter.emitterCells = [white]
+		view.layer.addSublayer(particleEmitter)
+	}
+	
+	private func makeEmitterCell(color: UIColor) -> CAEmitterCell {
+		let cell = CAEmitterCell()
+		cell.birthRate = 25
+		cell.lifetime = 15.0
+		cell.lifetimeRange = 0
+		cell.color = color.cgColor
+		cell.velocity = 100
+		cell.velocityRange = 50
+		cell.emissionLatitude = CGFloat.pi
+		cell.emissionRange = CGFloat.pi / 4
+		//cell.spin = 2
+		//cell.spinRange = 3
+		cell.scaleRange = 1
+		cell.scale = 0.1
+		cell.scaleSpeed = -0.05
+		cell.contents = UIImage(named: "particle.png")?.cgImage
+		return cell
+	}
+	
+	func addRain() {
+		self.view.backgroundColor = UIColor.white
+		let particleEmitter = CAEmitterLayer()
+		particleEmitter.emitterPosition = CGPoint(x: view.center.x, y: -96)
+		particleEmitter.emitterShape = .line
+		particleEmitter.emitterSize = CGSize(width: view.frame.size.width, height: 1)
+		let white = makeEmitterCellRain(color: UIColor.white)
+		particleEmitter.emitterCells = [white]
+		view.layer.addSublayer(particleEmitter)
+	}
+	
+	private func makeEmitterCellRain(color: UIColor) -> CAEmitterCell {
+		let cell = CAEmitterCell()
+		cell.birthRate = 100
+		cell.lifetime = 7.0
+		cell.lifetimeRange = 0
+		cell.color = color.cgColor
+		cell.velocity = 500
+		cell.velocityRange = 250
+		cell.emissionLatitude = CGFloat.pi
+		//cell.emissionRange = CGFloat.pi / 4
+		//cell.spin = 2
+		//cell.spinRange = 3
+		cell.scaleRange = 1
+		cell.scale = 0.1
+		cell.scaleSpeed = -0.05
+		cell.contents = UIImage(named: "rain2.png")?.cgImage
+		return cell
+	}
+	
+	func removeEffects() {
+		self.view.layer.sublayers?.forEach {
+			if let item: CAEmitterLayer = $0 as? CAEmitterLayer {
+				item.removeFromSuperlayer()
+			}
+		}
+	}
+	
+}
+
 var audioPlayer = AVAudioPlayer()
 var musicPlayer = MPMusicPlayerController.applicationMusicPlayer
 
@@ -148,6 +220,8 @@ public class musicHandler{
 			if(GlobalVars.musicStarted){
 				
 				musicPlayer.play()
+			} else {
+				musicPlayer.stop()
 			}
 		} else {
 			audioPlayer.prepareToPlay()
@@ -610,7 +684,10 @@ class FirstViewController: UIViewController{
 		if((GlobalVars.hour >= 8) && (GlobalVars.hour <= 19)){ //Daytime
 			//print("day")
 			do{
-				let gif = try UIImage(gifName: "day.gif")
+				var gif = try UIImage(gifName: "day.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "day snow.gif")
+				}
 				sceneryImageView.setGifImage(gif, loopCount: -1)
 			}catch{print(error)}
 			//sceneryImageView.image = UIImage(named: "ACBackgroundDay", in: Bundle(for: type(of: self)), compatibleWith: nil)
@@ -618,7 +695,10 @@ class FirstViewController: UIViewController{
 		} else if((GlobalVars.hour >= 20) && (GlobalVars.hour <= 21)){//Sunset
 			//print("sunset")
 			do{
-				let gif = try UIImage(gifName: "day.gif")
+				var gif = try UIImage(gifName: "day.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "day snow.gif")
+				}
 				sceneryImageView.setGifImage(gif, loopCount: -1)
 			}catch{print(error)}
 			//sceneryImageView.image = UIImage(named: "ACBackgroundDay", in: Bundle(for: type(of: self)), compatibleWith: nil)
@@ -626,7 +706,10 @@ class FirstViewController: UIViewController{
 		} else if((GlobalVars.hour >= 22) || (GlobalVars.hour <= 5)){//Night
 			//print("night")
 			do{
-				let gif = try UIImage(gifName: "night.gif")
+				var gif = try UIImage(gifName: "night.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "night snow.gif")
+				}
 				sceneryImageView.setGifImage(gif, loopCount: -1)
 			}catch{print(error)}
 			//sceneryImageView.image = UIImage(named: "ACBackgroundNight", in: Bundle(for: type(of: self)), compatibleWith: nil)
@@ -634,7 +717,10 @@ class FirstViewController: UIViewController{
 		} else if((GlobalVars.hour >= 6) && (GlobalVars.hour <= 7)){//Sunrise
 			//print("sunrise")
 			do{
-				let gif = try UIImage(gifName: "day.gif")
+				var gif = try UIImage(gifName: "day.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "day snow.gif")
+				}
 				sceneryImageView.setGifImage(gif, loopCount: -1)
 			}catch{print(error)}
 			//sceneryImageView.image = UIImage(named: "ACBackgroundDay", in: Bundle(for: type(of: self)), compatibleWith: nil)
@@ -656,14 +742,17 @@ class FirstViewController: UIViewController{
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			removeAllEffects()
 		} else if GlobalVars.weatherList == 1 {
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			showRain()
 		} else if GlobalVars.weatherList == 2 {
 			let backImg: UIImage = UIImage(named: "grasssnow")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
+			showSnowflakes()
 		}
 	}
 	
@@ -703,11 +792,13 @@ class FirstViewController: UIViewController{
 			audioPlayer.stop()
 			musicPlayer.stop()
 			
+			
 			controlButton.accessibilityLabel = "Play Button"
 			controlButton.setBackgroundImage(UIImage(systemName: "play.circle"), for: UIControl.State.normal)
 			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0,animations: {self.PlayButtonSize.constant = 90;self.view.layoutIfNeeded()}, completion: nil)
 			print("Music started: \(GlobalVars.musicStarted)")
 		}
+		musicHandler.updateMusic()
 		var nowPlayingString:String = "Now Playing: "
 		if (musicPlayer.playbackState == MPMusicPlaybackState.playing) {
 		
@@ -921,21 +1012,59 @@ class FirstViewController: UIViewController{
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			removeAllEffects()
 		} else if weatherControl.selectedSegmentIndex == 1 {
 			list = list + 5
 			let backImg: UIImage = UIImage(named: "grass")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
+			showRain()
 		} else if weatherControl.selectedSegmentIndex == 2 {
 			list = list + 10
-			
 			let backImg: UIImage = UIImage(named: "grasssnow")!
 			self.tabBarController?.tabBar.backgroundImage = backImg
 			self.tabBarController?.tabBar.tintColor = UIColor(red: 0.12, green: 0.54, blue: 0.61, alpha: 1.00)
+			showSnowflakes()
 		}
 		
 		GlobalVars.selectedMusicList = list
 		GlobalVars.weatherList = weatherControl.selectedSegmentIndex
+		
+		if((GlobalVars.hour >= 8) && (GlobalVars.hour <= 19)){ //Daytime
+			//print("day")
+			do{
+				var gif = try UIImage(gifName: "day.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "day snow.gif")
+				}
+				sceneryImageView.setGifImage(gif, loopCount: -1)
+			}catch{print(error)}
+		} else if((GlobalVars.hour >= 20) && (GlobalVars.hour <= 21)){//Sunset
+			do{
+				var gif = try UIImage(gifName: "day.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "day snow.gif")
+				}
+				sceneryImageView.setGifImage(gif, loopCount: -1)
+			}catch{print(error)}
+		} else if((GlobalVars.hour >= 22) || (GlobalVars.hour <= 5)){//Night
+			//print("night")
+			do{
+				var gif = try UIImage(gifName: "night.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "night snow.gif")
+				}
+				sceneryImageView.setGifImage(gif, loopCount: -1)
+			}catch{print(error)}
+		} else if((GlobalVars.hour >= 6) && (GlobalVars.hour <= 7)){//Sunrise
+			do{
+				var gif = try UIImage(gifName: "day.gif")
+				if GlobalVars.weatherList == 2 {
+					gif = try UIImage(gifName: "day snow.gif")
+				}
+				sceneryImageView.setGifImage(gif, loopCount: -1)
+			}catch{print(error)}
+		}
 		
 		print("selected playlist is \(list)")
 		
@@ -944,6 +1073,20 @@ class FirstViewController: UIViewController{
 		//print(GlobalVars.selectedMusicList)
 		musicHandler.updateMusic()
 		//print("updating")
+	}
+	
+	@objc func showSnowflakes() {
+		self.removeEffects()
+		self.addSnowflakes()
+	}
+	
+	@objc func showRain() {
+		self.removeEffects()
+		self.addRain()
+	}
+	
+	@objc func removeAllEffects() {
+		self.removeEffects()
 	}
 	
 	

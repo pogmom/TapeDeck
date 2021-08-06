@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD3D00D026BCCF490044E90C /* icons8-winter-100.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3D00CD26BCCF490044E90C /* icons8-winter-100.png */; };
+		BD3D00D126BCCF490044E90C /* icons8-winter-80.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3D00CE26BCCF490044E90C /* icons8-winter-80.png */; };
+		BD3D00D226BCCF490044E90C /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3D00CF26BCCF490044E90C /* particle.png */; };
+		BD3D00D426BCD3D00044E90C /* rain.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3D00D326BCD3D00044E90C /* rain.png */; };
+		BD3D00D626BCD4400044E90C /* rain2.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3D00D526BCD4400044E90C /* rain2.png */; };
 		BD555AF02518A159006E0058 /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD555AEF2518A159006E0058 /* FourthViewController.swift */; };
+		BD61739226BCE0CE00DF38B4 /* day snow.gif in Resources */ = {isa = PBXBuildFile; fileRef = BD61739026BCE0CE00DF38B4 /* day snow.gif */; };
+		BD61739326BCE0CE00DF38B4 /* night snow.gif in Resources */ = {isa = PBXBuildFile; fileRef = BD61739126BCE0CE00DF38B4 /* night snow.gif */; };
 		BD7A5E342510173A003E992C /* day.gif in Resources */ = {isa = PBXBuildFile; fileRef = BD7A5E332510173A003E992C /* day.gif */; };
 		BD7A5E39251034D7003E992C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD7A5E38251034D7003E992C /* StoreKit.framework */; };
 		BD7D35D72510042D00A61B6B /* night.gif in Resources */ = {isa = PBXBuildFile; fileRef = BD7D35D52510042D00A61B6B /* night.gif */; };
@@ -72,8 +79,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BD3D00CD26BCCF490044E90C /* icons8-winter-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-winter-100.png"; sourceTree = "<group>"; };
+		BD3D00CE26BCCF490044E90C /* icons8-winter-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-winter-80.png"; sourceTree = "<group>"; };
+		BD3D00CF26BCCF490044E90C /* particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle.png; sourceTree = "<group>"; };
+		BD3D00D326BCD3D00044E90C /* rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rain.png; sourceTree = "<group>"; };
+		BD3D00D526BCD4400044E90C /* rain2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rain2.png; sourceTree = "<group>"; };
 		BD555AEF2518A159006E0058 /* FourthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
 		BD58E8C325145778008D1E8E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		BD61739026BCE0CE00DF38B4 /* day snow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "day snow.gif"; sourceTree = "<group>"; };
+		BD61739126BCE0CE00DF38B4 /* night snow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "night snow.gif"; sourceTree = "<group>"; };
 		BD7A5E332510173A003E992C /* day.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = day.gif; sourceTree = "<group>"; };
 		BD7A5E38251034D7003E992C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BD7D35D52510042D00A61B6B /* night.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = night.gif; sourceTree = "<group>"; };
@@ -141,6 +155,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD3D00CC26BCCF490044E90C /* images */ = {
+			isa = PBXGroup;
+			children = (
+				BD3D00CD26BCCF490044E90C /* icons8-winter-100.png */,
+				BD3D00CE26BCCF490044E90C /* icons8-winter-80.png */,
+				BD3D00CF26BCCF490044E90C /* particle.png */,
+				BD3D00D326BCD3D00044E90C /* rain.png */,
+				BD3D00D526BCD4400044E90C /* rain2.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		BD7A5E37251034D7003E992C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +181,8 @@
 			isa = PBXGroup;
 			children = (
 				BD7A5E332510173A003E992C /* day.gif */,
+				BD61739026BCE0CE00DF38B4 /* day snow.gif */,
+				BD61739126BCE0CE00DF38B4 /* night snow.gif */,
 				BD7D35D52510042D00A61B6B /* night.gif */,
 			);
 			path = gifs;
@@ -187,6 +215,7 @@
 		BDA060F82447F3E6009C72CE /* grandfatherrock */ = {
 			isa = PBXGroup;
 			children = (
+				BD3D00CC26BCCF490044E90C /* images */,
 				BDA0618A244826DB009C72CE /* grandfatherrock.entitlements */,
 				BDA060F92447F3E6009C72CE /* AppDelegate.swift */,
 				BDA060FB2447F3E6009C72CE /* SceneDelegate.swift */,
@@ -378,11 +407,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDA061082447F3F2009C72CE /* LaunchScreen.storyboard in Resources */,
+				BD61739226BCE0CE00DF38B4 /* day snow.gif in Resources */,
+				BD3D00D426BCD3D00044E90C /* rain.png in Resources */,
 				BDA061052447F3F2009C72CE /* Assets.xcassets in Resources */,
 				BD7D35D72510042D00A61B6B /* night.gif in Resources */,
 				BD7A5E342510173A003E992C /* day.gif in Resources */,
+				BD3D00D026BCCF490044E90C /* icons8-winter-100.png in Resources */,
+				BD3D00D226BCCF490044E90C /* particle.png in Resources */,
 				BDA061032447F3E6009C72CE /* Main.storyboard in Resources */,
+				BD3D00D126BCCF490044E90C /* icons8-winter-80.png in Resources */,
+				BD3D00D626BCD4400044E90C /* rain2.png in Resources */,
 				BDB53FCE250765A2004E9788 /* FinkHeavy.ttf in Resources */,
+				BD61739326BCE0CE00DF38B4 /* night snow.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
