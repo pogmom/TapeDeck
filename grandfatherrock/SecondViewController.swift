@@ -346,6 +346,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 			showSnowflakes()
 		}
 		
+		
 		GlobalVars.selectedMusicList = list
 		GlobalVars.weatherList = selectListWeatherControl.selectedSegmentIndex
 		
@@ -358,6 +359,8 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		print("saving savedWeatherList to \(selectListWeatherControl.selectedSegmentIndex)")
 		defaults.set(selectListWeatherControl.selectedSegmentIndex, forKey: "savedWeatherList")
 		//print(GlobalVars.selectedMusicList)
+		
+		updateGradientAndView()
 		hoursTable.reloadData()
 		musicHandler.updateMusic()
 		//print("updating")
@@ -396,6 +399,10 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 			musicHandler.updateMusic()
 		}
 		
+		updateGradientAndView()
+		
+		
+		/*
 		// create the gradient layer
 		let gradient = CAGradientLayer()
 		gradient.frame = self.view.bounds
@@ -417,6 +424,11 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		gradient.locations =  [0.00, 1.00]
 		
 		gradientView.layer.addSublayer(gradient)
+		*/
+		
+		
+		
+		
 		
 		print("list is supposed to be \(GlobalVars.selectedList) in home screen")
 		print("weather list is supposed to be \(GlobalVars.weatherList) in music screen")
@@ -473,5 +485,80 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		self.removeEffects()
 	}
 	
+	func updateGradientAndView(){
+	let gradient = CAGradientLayer()
+	gradient.frame = self.view.bounds
+	//print("time: ", GlobalVars.hour)
+	if((GlobalVars.hour >= 8) && (GlobalVars.hour <= 19)){ //Daytime
+		do{
+			var gradColors:[CGColor] = [UIColor(red: 0.39, green: 0.69, blue: 1.00, alpha: 1).cgColor, UIColor(red: 0.07, green: 0.45, blue: 0.87, alpha: 1).cgColor]
+			//63b0ff
+			//1273de
+			if GlobalVars.weatherList == 2 {
+				gradColors = [UIColor(red: 0.91, green: 0.98, blue: 1.00, alpha: 1.00).cgColor,UIColor(red: 0.36, green: 0.60, blue: 0.87, alpha: 1.00).cgColor]
+				//e8faff
+				//5b99de
+			} else if GlobalVars.weatherList == 1 {
+				//7da3ca
+				//416594
+				gradColors = [UIColor(red: 0.49, green: 0.64, blue: 0.79, alpha: 1.00).cgColor, UIColor(red: 0.25, green: 0.40, blue: 0.58, alpha: 1.00).cgColor]
+			}
+			gradient.colors = gradColors
+		}
+	} else if((GlobalVars.hour >= 20) && (GlobalVars.hour <= 21)){//Sunset
+		do{
+			var gradColors:[CGColor] = [UIColor(red: 0.00, green: 0.31, blue: 0.59, alpha: 1).cgColor, UIColor(red: 1.00, green: 0.78, blue: 0.88, alpha: 1).cgColor]
+			//004f96
+			//ffc7e0
+			if GlobalVars.weatherList == 2 {
+				gradColors = [UIColor(red: 0.46, green: 0.61, blue: 0.71, alpha: 1.00).cgColor,UIColor(red: 1.00, green: 0.89, blue: 0.94, alpha: 1.00).cgColor]
+				//769cb6
+				//ffe4f0
+			} else if GlobalVars.weatherList == 1 {
+				gradColors = [UIColor(red: 0.27, green: 0.44, blue: 0.59, alpha: 1.00).cgColor,UIColor(red: 0.64, green: 0.48, blue: 0.55, alpha: 1.00).cgColor]
+				//446f96
+				//a27b8c
+			}
+			gradient.colors = gradColors
+		}
+	} else if((GlobalVars.hour >= 22) || (GlobalVars.hour <= 5)){//Night
+		do{
+			var gradColors:[CGColor] = [UIColor(red: 0.08, green: 0.27, blue: 0.59, alpha: 1).cgColor, UIColor(red: 0.00, green: 0.20, blue: 0.29, alpha: 1).cgColor]
+			//144596
+			//00334a
+			if GlobalVars.weatherList == 2 {
+				gradColors = [UIColor(red: 0.55, green: 0.59, blue: 0.60, alpha: 1.00).cgColor,UIColor(red: 0.18, green: 0.30, blue: 0.44, alpha: 1.00).cgColor]
+				//8B9699
+				//2E4D70
+			} else if GlobalVars.weatherList == 1 {
+				gradColors = [UIColor(red: 0.00, green: 0.12, blue: 0.17, alpha: 1.00).cgColor,UIColor(red: 0.05, green: 0.18, blue: 0.39, alpha: 1.00).cgColor]
+				//0D2E63
+				//001E2B
+			}
+			gradient.colors = gradColors
+		}
+	} else if((GlobalVars.hour >= 6) && (GlobalVars.hour <= 7)){//Sunrise
+		do{
+			var gradColors:[CGColor] = [UIColor(red: 0.02, green: 0.26, blue: 0.49, alpha: 1).cgColor, UIColor(red: 0.89, green: 0.68, blue: 0.60, alpha: 1).cgColor]
+			//05427D
+			//e3ad99
+			if GlobalVars.weatherList == 2 {
+				gradColors = [UIColor(red: 0.50, green: 0.61, blue: 0.72, alpha: 1.00).cgColor,UIColor(red: 0.94, green: 0.87, blue: 0.84, alpha: 1.00).cgColor]
+				//809CB7
+				//EFDDD7
+			} else if GlobalVars.weatherList == 1 {
+				gradColors = [UIColor(red: 0.14, green: 0.25, blue: 0.36, alpha: 1.00).cgColor,UIColor(red: 0.54, green: 0.41, blue: 0.36, alpha: 1.00).cgColor]
+				//23405C
+				//8A685C
+			}
+			gradient.colors = gradColors
+		}
+	}
+	
+	gradient.locations =  [0.00, 1.00]
+	
+	gradientView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+	gradientView.layer.addSublayer(gradient)
+	}
 }
 
