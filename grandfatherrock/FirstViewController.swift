@@ -49,6 +49,20 @@ extension UserDefaults: ObjectSavable {
 	}
 }
 
+extension UIView {
+  func fitLayers() {
+	layer.fit(rect: bounds)
+  }
+}
+
+extension CALayer {
+  func fit(rect: CGRect) {
+	frame = rect
+
+	sublayers?.forEach { $0.fit(rect: rect) }
+  }
+}
+
 extension UIViewController {
 	
 	func addSnowflakes() {
@@ -532,6 +546,12 @@ class FirstViewController: UIViewController{
 		//print(error)
 		}*/
 		
+	}
+	
+	override func viewWillLayoutSubviews() {
+	  super.viewWillLayoutSubviews()
+
+	  view.fitLayers()
 	}
 	
 	@IBOutlet var sceneryImageView: UIImageView!
@@ -1225,7 +1245,9 @@ class FirstViewController: UIViewController{
 	gradient.locations =  [0.00, 1.00]
 	
 	gradientView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+	gradientView.translatesAutoresizingMaskIntoConstraints = false
 	gradientView.layer.addSublayer(gradient)
+		
 	}
 	
 	

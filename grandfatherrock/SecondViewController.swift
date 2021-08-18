@@ -212,10 +212,18 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		//shareMenu.popoverPresentationController.sourceView = self.view
 		//shareMenu.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
 
+		
+		
+		#if targetEnvironment(macCatalyst)
+		
+		#else
 		alert.addAction(UIAlertAction(title: "From Music App", style: .default, handler: {_ in
 			self.tableHour = indexPath.row
 			self.present(self.mediaPicker, animated: true, completion: nil)
 		}))
+		#endif
+		
+		
 		alert.addAction(UIAlertAction(title: "From File", style: .default, handler: {_ in
 			let NotificationVC = self.storyboard?.instantiateViewController(withIdentifier: "FourthViewController") as! UIViewController
 			GlobalVars.selectedCell = indexPath.row
@@ -558,7 +566,14 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	gradient.locations =  [0.00, 1.00]
 	
 	gradientView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+	gradientView.translatesAutoresizingMaskIntoConstraints = false
 	gradientView.layer.addSublayer(gradient)
+	}
+	
+	override func viewWillLayoutSubviews() {
+	  super.viewWillLayoutSubviews()
+
+	  view.fitLayers()
 	}
 }
 

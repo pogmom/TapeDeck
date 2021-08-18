@@ -41,6 +41,10 @@ class ThirdViewController: UIViewController {
 		IAPHandler.shared.purchaseMyProduct(index: 0)
 	}
 	
+	@IBAction func dismiss(_ sender: Any) {
+		dismiss(animated: true)
+	}
+	
 	let defaults = UserDefaults.standard
 	
 	override func viewDidLoad() {

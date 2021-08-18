@@ -92,7 +92,7 @@
 		BD7A5E38251034D7003E992C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BD7D35D52510042D00A61B6B /* night.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = night.gif; sourceTree = "<group>"; };
 		BD8D804625188B2200389258 /* hssceneExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = hssceneExtension.entitlements; sourceTree = "<group>"; };
-		BDA060F62447F3E6009C72CE /* Nook Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nook Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDA060F62447F3E6009C72CE /* AC Tape Deck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AC Tape Deck.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA060F92447F3E6009C72CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDA060FB2447F3E6009C72CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BDA060FD2447F3E6009C72CE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 		BDA060F72447F3E6009C72CE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BDA060F62447F3E6009C72CE /* Nook Music.app */,
+				BDA060F62447F3E6009C72CE /* AC Tape Deck.app */,
 				BDA0610E2447F3F3009C72CE /* grandfatherrockTests.xctest */,
 				BDA061192447F3F3009C72CE /* grandfatherrockUITests.xctest */,
 				BDE56CB825186B0500A47239 /* hssceneExtension.appex */,
@@ -293,7 +293,7 @@
 				BDF748A32616C11500877F21 /* Zip */,
 			);
 			productName = grandfatherrock;
-			productReference = BDA060F62447F3E6009C72CE /* Nook Music.app */;
+			productReference = BDA060F62447F3E6009C72CE /* AC Tape Deck.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BDA0610D2447F3F3009C72CE /* grandfatherrockTests */ = {
@@ -649,7 +649,7 @@
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -657,10 +657,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock;
-				PRODUCT_NAME = "Nook Music";
-				SUPPORTS_MACCATALYST = NO;
+				PRODUCT_NAME = "AC Tape Deck";
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -675,7 +675,7 @@
 				CODE_SIGN_ENTITLEMENTS = grandfatherrock/grandfatherrock.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = grandfatherrock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -683,10 +683,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock;
-				PRODUCT_NAME = "Nook Music";
-				SUPPORTS_MACCATALYST = NO;
+				PRODUCT_NAME = "AC Tape Deck";
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -785,7 +785,7 @@
 				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = hsscene/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -794,11 +794,11 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -813,7 +813,7 @@
 				CODE_SIGN_ENTITLEMENTS = hssceneExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PRBH2T6668;
 				INFOPLIST_FILE = hsscene/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -822,11 +822,11 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mpg13.grandfatherrock.hsscene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
