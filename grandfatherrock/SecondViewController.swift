@@ -95,6 +95,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		cell.songLabel?.text = GlobalVars.musicSelection[GlobalVars.selectedMusicList][indexPath.row]
 		if ((GlobalVars.musicSelectionID[GlobalVars.selectedMusicList][indexPath.row] == 0) && (GlobalVars.musicFileURL[GlobalVars.selectedMusicList][indexPath.row] == "")){
 			cell.accessoryType = .detailButton
+			cell.tintColor = UIColor(red: 0.86, green: 0.69, blue: 0.24, alpha: 1.00)
 			cell.accessibilityLabel?.append("No song set")
 		} else {
 			cell.accessoryType = .none

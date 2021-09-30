@@ -395,6 +395,7 @@ class FirstViewController: UIViewController{
 			controlButton.setBackgroundImage(UIImage(systemName: "play.circle"), for: UIControl.State.normal)
 			UIView.animate(withDuration: 0.4, delay: 0,usingSpringWithDamping: 0.5,initialSpringVelocity: 0, animations: {self.PlayButtonSize.constant = 90;self.view.layoutIfNeeded()}, completion: nil)
 		}
+		labelTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector:#selector(self.tick) , userInfo: nil, repeats: true)
 	}
 	
 	override func viewDidLoad() {
@@ -546,6 +547,55 @@ class FirstViewController: UIViewController{
 		//print(error)
 		}*/
 		
+		var foundSong = false
+		
+		
+		print("woah! \(GlobalVars.selectedMusicList)")
+		for i in GlobalVars.musicSelectionID[GlobalVars.selectedMusicList] {
+			if (i != 0){
+				foundSong = true
+			}
+		}
+		for i in GlobalVars.musicFileURL[GlobalVars.selectedMusicList] {
+			if (i != ""){
+				foundSong = true
+			}
+		}
+		
+		print("found song? \(foundSong)")
+		
+		if !foundSong {
+			print("no song found!")
+			let errorAlert = UIAlertController(title: "Song Error", message: "No songs found in this track. Please visit the 'Select Music' tab to set a song and get started!", preferredStyle: .alert)
+			
+			// Create OK button
+			let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+				
+				let helpAlert = UIAlertController(title: "Need Help Importing Music?", message: "A tutorial is available to help with importing music to use with this app. Would you like to view it?", preferredStyle: .alert)
+				
+				// Create OK button
+				let HelpAction = UIAlertAction(title: "Yes Please!", style: .default) { (action:UIAlertAction!) in
+					if let url = URL(string: "https://youtu.be/YtOC5YFCt7E") {
+						UIApplication.shared.open(url)
+					}
+				}
+				helpAlert.addAction(HelpAction)
+				let NoHelpAction = UIAlertAction(title: "No Thanks", style: .default) { (action:UIAlertAction!) in
+					//print("Ok button tapped");
+				}
+				helpAlert.addAction(NoHelpAction)
+				
+				// Present Dialog message
+				self.present(helpAlert, animated: true, completion:nil)
+				
+			}
+			errorAlert.addAction(OKAction)
+			
+			// Present Dialog message
+			self.present(errorAlert, animated: true, completion:nil)
+			print("Song is missing for at one hour")
+		}
+		
 	}
 	
 	override func viewWillLayoutSubviews() {
@@ -627,7 +677,7 @@ class FirstViewController: UIViewController{
 		}
 		
 		if !foundSong && defaults.bool(forKey: "didRun") {
-			let errorAlert = UIAlertController(title: "Song Error", message: "No songs found in this track. Please visit the 'Select Music' tab to set a song and get started!", preferredStyle: .alert)
+			/*let errorAlert = UIAlertController(title: "Song Error", message: "No songs found in this track. Please visit the 'Select Music' tab to set a song and get started!", preferredStyle: .alert)
 			
 			// Create OK button
 			let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
@@ -654,7 +704,7 @@ class FirstViewController: UIViewController{
 			
 			// Present Dialog message
 			self.present(errorAlert, animated: true, completion:nil)
-			//print("Song is missing for at one hour")
+			//print("Song is missing for at one hour")*/
 			
 			controlButton.isEnabled = false
 			controlButton.accessibilityLabel = "Play Button. Music Cannot be played."
